@@ -3,6 +3,7 @@ package cn.tedu.csmall.product.controller;
 import cn.tedu.csmall.product.ex.ServiceException;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
 import cn.tedu.csmall.product.service.IAlbumService;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,12 @@ public class AlbumController {
         } catch (Throwable throwable){
             return "添加失败！出现了某种异常！";
         }
+    }
+
+    @PostMapping("/delete")
+    @ApiOperation("根据ID删除相册")
+    @ApiOperationSupport(order = 200)
+    public String delete(){
+        throw new RuntimeException("别急，还没做!");
     }
 }
