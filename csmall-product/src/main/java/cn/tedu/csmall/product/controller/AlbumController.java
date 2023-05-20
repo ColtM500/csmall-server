@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,31 +22,27 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/album")
 @Api(tags = "04.相册管理模块")
+@Validated
 public class AlbumController {
 
     @Autowired
     private IAlbumService albumService;
 
-    @ExceptionHandler
-    public String handleServiceException(ServiceException e){
-        log.warn("程序运行过程中出现了ServiceException, 将统一处理！");
-        log.warn("异常信息:{}", e.getMessage());
-        return  e.getMessage();
-    }
+//    @ExceptionHandler
+//    public String handleServiceException(ServiceException e){
+//        log.warn("程序运行过程中出现了ServiceException, 将统一处理！");
+//        log.warn("异常信息:{}", e.getMessage());
+//        return  e.getMessage();
+//    }
 
     // http://localhost:8080/album/add-new?name=TestName001&description=TestDescription001&sort=99
     @PostMapping("/add-new")
     @ApiOperation("添加相册")
     @ApiOperationSupport(order = 100)
-    public String addNew(AlbumAddNewParam albumAddNewParam){
-        try {
+    public String addNew(@Validated AlbumAddNewParam albumAddNewParam){
+            log.debug("开始处理【添加相册】的请求，参数：{}", albumAddNewParam);
             albumService.addNew(albumAddNewParam);
             return "添加成功!";
-        } catch (ServiceException e) {
-            return e.getMessage();
-        } catch (Throwable throwable){
-            return "添加失败！出现了某种异常！";
-        }
     }
 
     // http://localhost:8080/album/delete
