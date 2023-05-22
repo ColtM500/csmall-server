@@ -3,6 +3,7 @@ package cn.tedu.csmall.product.pojo.param;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public class AlbumAddNewParam implements Serializable {
     private String description;
 
     @NotNull(message = "添加相册失败，必须提交排序序号！")
+    @Range(max = 99, message = "排序序号值必须在0-99之间")
     @ApiModelProperty(value = "排序序号，必须是1~255之间的数字", required = true, example = "97")
     private Integer sort;
 }
