@@ -25,18 +25,11 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/album")
 @Api(tags = "04.相册管理模块")
-//@Validated
+@Validated
 public class AlbumController {
 
     @Autowired
     private IAlbumService albumService;
-
-//    @ExceptionHandler
-//    public String handleServiceException(ServiceException e){
-//        log.warn("程序运行过程中出现了ServiceException, 将统一处理！");
-//        log.warn("异常信息:{}", e.getMessage());
-//        return  e.getMessage();
-//    }
 
     // http://localhost:8080/album/add-new?name=TestName001&description=TestDescription001&sort=99
     @PostMapping("/add-new")
@@ -49,8 +42,6 @@ public class AlbumController {
 
             return JsonResult.ok();
     }
-
-
 
     // http://localhost:8080/album/delete
     @PostMapping("/delete")
