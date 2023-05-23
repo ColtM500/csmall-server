@@ -1,11 +1,13 @@
 package cn.tedu.csmall.product.mapper;
 
 import cn.tedu.csmall.product.pojo.entity.Album;
+import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 public class AlbumMapperTests {
@@ -28,4 +30,12 @@ public class AlbumMapperTests {
         System.out.println("插入数据之后，参数：" + album);
     }
 
+    @Test
+    void list(){
+        List<?> list = mapper.list();
+        System.out.println("查询列表完成，结果集中的数据量: " + list.size());
+        for (Object item : list) {
+            System.out.println(item);
+        }
+    }
 }

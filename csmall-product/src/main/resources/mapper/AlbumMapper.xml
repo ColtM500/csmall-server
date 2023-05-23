@@ -4,5 +4,10 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.AlbumMapper">
 
-
+<!--    List<AlbumListItemVO> list();-->
+<select id="list" resultType="cn.tedu.csmall.product.pojo.vo.AlbumListItemVO">
+    select id, id, name, description, sort
+    from pms_album
+    order by sort desc, id desc
+</select>
 </mapper>

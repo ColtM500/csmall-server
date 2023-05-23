@@ -60,6 +60,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <!-- 基于MyBatis或MyBatis Plus的分页查询框架 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
         <!-- Spring Boot测试的依赖项 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
