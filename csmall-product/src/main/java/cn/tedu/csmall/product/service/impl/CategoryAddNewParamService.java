@@ -5,6 +5,7 @@ import cn.tedu.csmall.product.mapper.CategoryMapper;
 import cn.tedu.csmall.product.pojo.entity.Category;
 import cn.tedu.csmall.product.pojo.param.CategoryAddNewParam;
 import cn.tedu.csmall.product.service.ICategoryService;
+import cn.tedu.csmall.product.web.ServiceCode;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -29,7 +30,7 @@ public class CategoryAddNewParamService implements ICategoryService {
         log.debug("根据类别名称统计匹配的类别数量，结果:{}", countByName);
         if (countByName>0){
             String message = "添加类别失败，类别名称已被占用";
-            throw new ServiceException(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);
         }
 
         //将类别名称添加到数据库中

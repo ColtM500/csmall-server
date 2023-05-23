@@ -5,6 +5,7 @@ import cn.tedu.csmall.product.mapper.BrandMapper;
 import cn.tedu.csmall.product.pojo.entity.Brand;
 import cn.tedu.csmall.product.pojo.param.BrandAddNewParam;
 import cn.tedu.csmall.product.service.IBrandService;
+import cn.tedu.csmall.product.web.ServiceCode;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -30,7 +31,7 @@ public class BrandAddNewParamService implements IBrandService {
         log.debug("根据品牌名称统计匹配的属性模板数量，结果:{}", countByName);
         if (countByName>0){
             String message = "添加品牌失败，品牌名称已被占用";
-            throw new ServiceException(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);
         }
 
         //将品牌名称写入到数据库中

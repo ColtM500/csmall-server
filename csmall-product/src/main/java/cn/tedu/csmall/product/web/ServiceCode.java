@@ -7,17 +7,21 @@ public enum ServiceCode {
 
     OK(20000),
     ERR_BAD_REQUEST(40000),
+    ERR_NOT_FOUND(40400),
     ERR_CONFLICT(40900),
-    ERR_UNKOWN(9999);
+    ERR_INSERT(50000),
+    ERR_DELETE(50100),
+    ERR_UPDATE(50200),
+    ERR_UNKNOWN(99999)
+    ;
 
     private Integer value;
 
-    public Integer getValue(){
+    public Integer getValue() {
         return value;
     }
 
-    //通过构造方法的参数为属性赋值
-    ServiceCode(Integer value){
+    ServiceCode(Integer value) {
         this.value = value;
     }
 }
