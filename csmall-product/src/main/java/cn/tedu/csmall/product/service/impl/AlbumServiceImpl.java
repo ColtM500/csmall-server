@@ -64,12 +64,12 @@ public class AlbumServiceImpl implements IAlbumService {
 
     @Override
     public PageData<AlbumListItemVO> list(Integer pageNum, Integer pageSize) {
-        log.debug("开始处理【添加相册】的业务，参数:{}", pageNum, pageSize);
+        log.debug("开始处理【查询相册列表】的业务，页码：{}，每页记录数：{}", pageNum, pageSize);
         PageHelper.startPage(pageNum, pageSize);
         List<AlbumListItemVO> list = albumMapper.list();
         PageInfo<AlbumListItemVO> pageInfo = new PageInfo<>(list);
         PageData<AlbumListItemVO> pageData = PageInfoToPageDataConvert.convert(pageInfo);
-        log.debug("查询完成，即将返回:{}", pageData);
+        log.debug("查询完成，即将返回：{}", pageData);
         return pageData;
     }
 

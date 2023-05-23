@@ -12,11 +12,18 @@ import com.github.pagehelper.PageInfo;
  */
 
 public class PageInfoToPageDataConvert<T> {
-    public static <T> PageData<T> convert(PageInfo<T> pageInfo){
+    /**
+     * 将PageInfo类型转换成自定义的PageData类型
+     *
+     * @param pageInfo PageInfo对象
+     * @param <T>      数据列表中的元素类型
+     * @return 自定义的PageData类型的对象
+     */
+    public static <T> PageData<T> convert(PageInfo<T> pageInfo) {
         PageData<T> pageData = new PageData<T>()
                 .setCurrentPage(pageInfo.getPageNum())
                 .setMaxPage(pageInfo.getPages())
-                .setPageSize(pageInfo.getSize())
+                .setPageSize(pageInfo.getPageSize())
                 .setTotal(pageInfo.getTotal())
                 .setList(pageInfo.getList());
         return pageData;

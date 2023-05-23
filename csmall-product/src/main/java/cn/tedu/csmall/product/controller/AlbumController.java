@@ -2,6 +2,8 @@ package cn.tedu.csmall.product.controller;
 
 import cn.tedu.csmall.product.ex.ServiceException;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
+import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
+import cn.tedu.csmall.product.pojo.vo.PageData;
 import cn.tedu.csmall.product.service.IAlbumService;
 import cn.tedu.csmall.product.web.JsonResult;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -16,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 
 @Slf4j
@@ -51,4 +54,23 @@ public class AlbumController {
     public String delete(@Range(min = 1, message = "根据ID删除相册失败，请提交合法的ID值！") @RequestParam Long albumId, Long userId){
         throw new RuntimeException("别急，还没做!");
     }
+
+    // http://localhost:8080/album/list
+    @GetMapping("/list")
+    @ApiOperation("查询相册列表")
+    @ApiOperationSupport(order = 420)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页码", paramType = "query")
+    })
+    public JsonResult list(@Range(min = 1, message = "查询相册列表失败，请提供正确的页码值!") Integer page){
+        log.debug("开始处理【查询相册列表】的请求，页码：{}", page);
+        if (page == null || page < 1){
+            page = 1;
+        }
+        PageData<AlbumListItemVO> pageData = albumService.list(page);
+        //ok返回JsonResult对象 由于返回了链式写法 每个set方法都返回了当前对象 可作为当前JsonResult方法的返回值
+        //否则平时set方法的返回值都是void
+        return JsonResult.ok().setData(pageData);
+    }
+
 }

@@ -13,18 +13,22 @@ public class PageData<T> implements Serializable {
      * 当前页码
      */
     private Integer currentPage;
+
     /**
      * 最大页码
      */
     private Integer maxPage;
+
     /**
      * 每页记录数据
      */
     private Integer pageSize;
+
     /**
-     * 记录的总数量
+     * 记录总数
      */
     private Long total;
+
     /**
      * 列表数据
      */
