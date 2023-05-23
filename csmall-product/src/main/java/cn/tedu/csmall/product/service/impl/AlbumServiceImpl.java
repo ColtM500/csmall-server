@@ -4,6 +4,9 @@ import cn.tedu.csmall.product.ex.ServiceException;
 import cn.tedu.csmall.product.mapper.AlbumMapper;
 import cn.tedu.csmall.product.pojo.entity.Album;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
+import cn.tedu.csmall.product.pojo.param.AlbumUpdateInfoParam;
+import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
+import cn.tedu.csmall.product.pojo.vo.PageData;
 import cn.tedu.csmall.product.service.IAlbumService;
 import cn.tedu.csmall.product.web.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
@@ -43,4 +46,20 @@ public class AlbumServiceImpl implements IAlbumService {
         albumMapper.insert(album);
         log.debug("将新的相册数据写入到数据库中，完成!");
     }
+
+    @Override
+    public void updateInfoById(Long id, AlbumUpdateInfoParam albumUpdateInfoParam) {
+        log.warn("等待施工……");
+    }
+
+    @Override
+    public PageData<AlbumListItemVO> list(Integer pageNum) {
+        return null;
+    }
+
+    @Override
+    public PageData<AlbumListItemVO> list(Integer pageNum, Integer pageSize) {
+        return null;
+    }
+
 }
