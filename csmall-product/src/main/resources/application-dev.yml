@@ -7,3 +7,5 @@ spring:
 logging:
   level:
     cn.tedu.csmall: trace
+server:
+  port: 9180
