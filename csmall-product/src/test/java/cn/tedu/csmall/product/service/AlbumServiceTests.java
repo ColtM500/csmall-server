@@ -2,9 +2,12 @@ package cn.tedu.csmall.product.service;
 
 import cn.tedu.csmall.product.ex.ServiceException;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
+import cn.tedu.csmall.product.pojo.vo.PageData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class AlbumServiceTests {
@@ -27,6 +30,17 @@ public class AlbumServiceTests {
         } catch (Throwable throwable) {
             System.out.println("添加失败！出现了某种异常！");
             throwable.printStackTrace();
+        }
+    }
+
+    @Test
+    void list(){
+        Integer pageNum = 1;
+        PageData<?> pageData = service.list(pageNum);
+        List<?> list = pageData.getList();
+        System.out.println("查询列表完成，结果集中的数据量: " + list.size());
+        for (Object item : list) {
+            System.out.println(item);
         }
     }
 }
