@@ -10,4 +10,11 @@
     from pms_album
     order by sort desc, id desc
 </select>
+
+<!--    AlbumStandardVO getStandardById(Long id);-->
+    <select id="getStandardById" resultType="cn.tedu.csmall.product.pojo.vo.AlbumStandardVO">
+        select  id, name, description, sort
+        from pms_album
+        WHERE id=#{id}
+    </select>
 </mapper>

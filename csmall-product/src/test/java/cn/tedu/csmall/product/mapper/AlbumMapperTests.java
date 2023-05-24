@@ -2,6 +2,7 @@ package cn.tedu.csmall.product.mapper;
 
 import cn.tedu.csmall.product.pojo.entity.Album;
 import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
+import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,14 @@ public class AlbumMapperTests {
         album.setGmtModified(LocalDateTime.now());
         int rows = mapper.updateById(album);
         log.debug("受影响的行数为:{}",rows);
+    }
+
+    @Test
+    void getStandardById(){
+        Long id = 1L;
+        Object queryResult = mapper.getStandardById(id);
+        System.out.println("根据【ID="+id+"】查询数据完成，结果： "+queryResult);
+
     }
 
 }

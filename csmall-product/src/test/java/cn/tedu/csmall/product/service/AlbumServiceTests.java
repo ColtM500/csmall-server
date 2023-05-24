@@ -2,8 +2,10 @@ package cn.tedu.csmall.product.service;
 
 import cn.tedu.csmall.product.ex.ServiceException;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
+import cn.tedu.csmall.product.pojo.param.AlbumUpdateInfoParam;
 import cn.tedu.csmall.product.pojo.vo.PageData;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -57,6 +59,37 @@ public class AlbumServiceTests {
             System.out.println("删除数据完成!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    void getStandardById(){
+        Long id = 3L;
+        try {
+            service.getStandardById(id);
+            System.out.println("根据ID查询数据完成!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    void updateInfoById() {
+        Long id = 1L;
+        AlbumUpdateInfoParam albumUpdateInfoParam = new AlbumUpdateInfoParam();
+        albumUpdateInfoParam.setName("华为Mate10的相册");
+        albumUpdateInfoParam.setDescription("测试数据简介-33333");
+        albumUpdateInfoParam.setSort(93);
+
+        try {
+            service.updateInfoById(id, albumUpdateInfoParam);
+            System.out.println("修改成功！");
+        } catch (ServiceException e) {
+            System.out.println(e.getServiceCode().getValue());
+            System.out.println(e.getMessage());
+        } catch (Throwable e) {
+            System.out.println("修改失败！出现了某种异常！");
+            e.printStackTrace();
         }
     }
 }

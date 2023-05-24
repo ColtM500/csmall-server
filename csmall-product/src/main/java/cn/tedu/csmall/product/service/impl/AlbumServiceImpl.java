@@ -12,6 +12,7 @@ import cn.tedu.csmall.product.pojo.entity.Spu;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
 import cn.tedu.csmall.product.pojo.param.AlbumUpdateInfoParam;
 import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
+import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
 import cn.tedu.csmall.product.pojo.vo.PageData;
 import cn.tedu.csmall.product.service.IAlbumService;
 import cn.tedu.csmall.product.util.PageInfoToPageDataConvert;
@@ -123,8 +124,56 @@ public class AlbumServiceImpl implements IAlbumService {
 
     @Override
     public void updateInfoById(Long id, AlbumUpdateInfoParam albumUpdateInfoParam) {
-        log.warn("等待施工……");
+        log.debug("开始处理【修改相册详情】的业务，ID：{}, 新数据：{}", id, albumUpdateInfoParam);
+        // 检查相册是否存在，如果不存在，则抛出异常
+        QueryWrapper<Album> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id);
+        int countById = albumMapper.selectCount(queryWrapper);
+        log.debug("根据相册ID统计匹配的相册数量，结果：{}", countById);
+        if (countById == 0) {
+            String message = "修改相册详情失败，相册数据不存在！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+        }
 
+        // 检查相册名称是否被其它相册占用，如果被占用，则抛出异常
+        QueryWrapper<Album> queryWrapper2 = new QueryWrapper<>();
+            // where name=? and id<>?
+            // where name='Redmi Note 15 5G的相册' and id<>1   >>> 0
+            // where name='华为P50的相册' and id<>1   >>> 1
+        queryWrapper2.eq("name", albumUpdateInfoParam.getName())
+                .ne("id", id);
+        int countByName = albumMapper.selectCount(queryWrapper2);
+        log.debug("根据相册名称统计匹配的相册数量，结果：{}", countByName);
+        if (countByName > 0) {
+            String message = "修改相册详情失败，相册名称已经被占用！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
+        }
+
+        // 执行修改
+        Album album = new Album();
+        BeanUtils.copyProperties(albumUpdateInfoParam, album);
+        album.setId(id);
+        int rows = albumMapper.updateById(album);
+        if (rows != 1) {
+            String message = "修改相册详情失败，服务器忙，请稍后再试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_UPDATE, message);
+        }
+        log.debug("将新的相册数据更新入到数据库，完成！");
+    }
+
+    @Override
+    public AlbumStandardVO getStandardById(Long id) {
+        log.debug("开始处理【根据ID查询相册详情】的业务,参数:{}",id);
+        AlbumStandardVO queryResult = albumMapper.getStandardById(id);
+        if (queryResult == null){
+            String message = "查询相册详情失败，相册数据不存在!";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+        }
+        return  queryResult;
     }
 
     @Override
