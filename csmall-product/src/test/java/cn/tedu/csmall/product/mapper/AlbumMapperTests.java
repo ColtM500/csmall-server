@@ -2,6 +2,7 @@ package cn.tedu.csmall.product.mapper;
 
 import cn.tedu.csmall.product.pojo.entity.Album;
 import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @SpringBootTest
 public class AlbumMapperTests {
 
@@ -46,5 +48,16 @@ public class AlbumMapperTests {
         System.out.println("删除数据完成!");
     }
 
+    @Test
+    void updateById(){
+        Album album = new Album();
+        album.setId(30L);
+        album.setName("nmsl666");
+        album.setDescription("xxx1,xxx2,xxx3");
+        album.setSort(199);
+        album.setGmtModified(LocalDateTime.now());
+        int rows = mapper.updateById(album);
+        log.debug("受影响的行数为:{}",rows);
+    }
 
 }
