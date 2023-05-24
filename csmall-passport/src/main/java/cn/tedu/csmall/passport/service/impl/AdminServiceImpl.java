@@ -13,11 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
 @Slf4j
+@Transactional
 public class AdminServiceImpl implements IAdminService {
 
     @Autowired
@@ -56,7 +58,10 @@ public class AdminServiceImpl implements IAdminService {
         AdminRole[] adminRoleList = new AdminRole[roleIds.length];
         for (int i = 0; i < adminRoleList.length; i++) {
             AdminRole adminRole = new AdminRole();
+            adminRole.setAdminId(admin.getId());
             adminRole.setRoleId(roleIds[i]);
+            adminRole.setGmtCreate(LocalDateTime.now());
+            adminRole.setGmtModified(LocalDateTime.now());
             adminRoleList[i] = adminRole;
         }
         adminRoleMapper.insertBatch(adminRoleList);

@@ -6,7 +6,9 @@ import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
 import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
 import cn.tedu.csmall.product.pojo.vo.PageData;
 import com.github.pagehelper.Page;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface IAlbumService {
 
     void addNew(AlbumAddNewParam albumAddNewParam);

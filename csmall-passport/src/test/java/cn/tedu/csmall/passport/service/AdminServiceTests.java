@@ -15,10 +15,10 @@ public class AdminServiceTests {
     @Test
     void addNew() {
         AdminAddNewParam adminAddNewParam = new AdminAddNewParam();
-        adminAddNewParam.setUsername("测试用户名0003");
-        adminAddNewParam.setPassword("测试密码0003");
-        adminAddNewParam.setDescription("测试简介0003");
-//        adminAddNewParam.setRoleIds(new Long[]{3L, 4L, 6L});
+        adminAddNewParam.setUsername("测试用户名0004");
+        adminAddNewParam.setPassword("测试密码0004");
+        adminAddNewParam.setDescription("测试简介0004");
+        adminAddNewParam.setRoleIds(new Long[]{3L, 4L, 6L});
 
         try {
             service.addNew(adminAddNewParam);
