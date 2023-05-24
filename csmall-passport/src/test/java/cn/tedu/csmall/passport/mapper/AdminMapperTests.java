@@ -24,9 +24,16 @@ public class AdminMapperTests {
         admin.setGmtCreate(LocalDateTime.now());
         admin.setGmtModified(LocalDateTime.now());
 
-        System.out.println("插入数据之前，参数：" + admin);
-        int rows = mapper.insert(admin);
-        System.out.println("插入完成,受影响的行数: "+rows);
-        System.out.println("插入数据之后，参数：" + admin);
+//        System.out.println("插入数据之前，参数：" + admin);
+//        int rows = mapper.insert(admin);
+//        System.out.println("插入完成,受影响的行数: "+rows);
+//        System.out.println("插入数据之后，参数：" + admin);
+
+        long start = System.currentTimeMillis();
+        for (int i=0; i<10; i++){
+            mapper.insert(admin);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end-start);
     }
 }
