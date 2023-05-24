@@ -1,5 +1,6 @@
 package cn.tedu.csmall.passport.pojo.param;
 
+import cn.tedu.csmall.passport.pojo.entity.AdminRole;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,4 +20,5 @@ public class AdminAddNewParam implements Serializable {
     private String description;
     private Integer enable;
 
+    private Long[] roleIds;
 }
