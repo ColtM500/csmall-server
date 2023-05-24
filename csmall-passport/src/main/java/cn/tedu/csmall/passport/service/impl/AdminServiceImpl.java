@@ -29,13 +29,13 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public void addNew(AdminAddNewParam adminAddNewParam) {
         log.debug("开始处理【添加管理员】的业务，参数：{}", adminAddNewParam);
-        //检查相册名称是否被占用 如果被占用 则抛出异常
+        //检查管理员名称是否被占用 如果被占用 则抛出异常
         QueryWrapper<Admin> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", adminAddNewParam.getUsername());  //name='参数中的相册名称'
         int countByUsername = adminMapper.selectCount(queryWrapper);
         log.debug("根据管理员用户名统计匹配的管理员数量，结果：{}", countByUsername);
         if (countByUsername>0){
-            String message = "添加相册失败，相册名称已被占用";
+            String message = "添加管理员失败，管理员名称已被占用";
             log.warn(message);
             throw new ServiceException(ServiceCode.ERR_CONFLICT,message);
         }
