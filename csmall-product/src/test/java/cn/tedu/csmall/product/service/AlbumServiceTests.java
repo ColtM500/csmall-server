@@ -48,4 +48,15 @@ public class AlbumServiceTests {
             System.out.println(item);
         }
     }
+
+    @Test
+    void deleteById(){
+        Long id = 2L;
+        try {
+            service.delete(id);
+            System.out.println("删除数据完成!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

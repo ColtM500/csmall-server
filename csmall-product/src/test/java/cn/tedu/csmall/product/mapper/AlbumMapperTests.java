@@ -39,5 +39,12 @@ public class AlbumMapperTests {
         }
     }
 
+    @Test
+    void deleteById(){
+        Long id = 12L;
+        mapper.deleteById(id);
+        System.out.println("删除数据完成!");
+    }
+
 
 }

@@ -2,7 +2,13 @@ package cn.tedu.csmall.product.service.impl;
 
 import cn.tedu.csmall.product.ex.ServiceException;
 import cn.tedu.csmall.product.mapper.AlbumMapper;
+import cn.tedu.csmall.product.mapper.PictureMapper;
+import cn.tedu.csmall.product.mapper.SkuMapper;
+import cn.tedu.csmall.product.mapper.SpuMapper;
 import cn.tedu.csmall.product.pojo.entity.Album;
+import cn.tedu.csmall.product.pojo.entity.Picture;
+import cn.tedu.csmall.product.pojo.entity.Sku;
+import cn.tedu.csmall.product.pojo.entity.Spu;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
 import cn.tedu.csmall.product.pojo.param.AlbumUpdateInfoParam;
 import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
@@ -25,8 +31,17 @@ import java.util.List;
 @Service
 public class AlbumServiceImpl implements IAlbumService {
 
-    @Autowired(required = false)
+    @Autowired
     private AlbumMapper albumMapper;
+
+    @Autowired
+    private PictureMapper pictureMapper;
+
+    @Autowired
+    private SkuMapper skuMapper;
+
+    @Autowired
+    private SpuMapper spuMapper;
 
     @Override
     public void addNew(AlbumAddNewParam albumAddNewParam) {
@@ -52,8 +67,64 @@ public class AlbumServiceImpl implements IAlbumService {
     }
 
     @Override
+    public void delete(Long id) {
+        log.debug("开始处理【根据ID删除相册】的业务，参数：{}", id);
+        // 检查相册是否存在，如果不存在，则抛出异常
+        QueryWrapper<Album> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id);
+        int countById = albumMapper.selectCount(queryWrapper);
+        log.debug("根据相册ID统计匹配的相册数量，结果：{}", countById);
+        if (countById == 0) {
+            String message = "删除相册失败，相册数据不存在！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+        }
+
+        // 检查是否有图片关联到了此相册，如果存在，则抛出异常
+        QueryWrapper<Picture> queryWrapper2 = new QueryWrapper<>();
+        queryWrapper2.eq("album_id", id);
+        int countByAlbumId = pictureMapper.selectCount(queryWrapper2);
+        log.debug("根据相册ID统计匹配的图片数量，结果：{}", countByAlbumId);
+        if (countByAlbumId > 0) {
+            String message = "删除相册失败，仍有图片关联到此相册！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
+        }
+
+        // 检查是否有SPU关联到了此相册，如果存在，则抛出异常
+        QueryWrapper<Spu> queryWrapper3 = new QueryWrapper<>();
+        queryWrapper3.eq("album_id", id);
+        int countBySpuId = spuMapper.selectCount(queryWrapper3);
+        log.debug("根据相册ID统计匹配的SPU数量，结果：{}", countByAlbumId);
+        if (countBySpuId > 0) {
+            String message = "删除相册失败，仍有SPU关联到此相册！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
+        }
+
+        // 检查是否有SKU关联到了此相册，如果存在，则抛出异常
+        QueryWrapper<Sku> queryWrapper4 = new QueryWrapper<>();
+        queryWrapper4.eq("album_id", id);
+        int countBySkuId = skuMapper.selectCount(queryWrapper4);
+        log.debug("根据相册ID统计匹配的SKU数量，结果：{}", countByAlbumId);
+        if (countBySkuId > 0) {
+            String message = "删除相册失败，仍有SKU关联到此相册！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
+        }
+
+        int rows = albumMapper.deleteById(id);
+        if (rows != 1) {
+            String message = "删除相册失败，服务器忙，请稍后再试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_DELETE, message);
+        }
+    }
+
+    @Override
     public void updateInfoById(Long id, AlbumUpdateInfoParam albumUpdateInfoParam) {
         log.warn("等待施工……");
+
     }
 
     @Override
