@@ -35,6 +35,9 @@ public class AdminServiceImpl implements IAdminService {
             throw new ServiceException(ServiceCode.ERR_CONFLICT,message);
         }
 
+        //TODO: 检查管理员手机号码是否被占用，如果被占用，则抛出异常
+        //TODO: 检查管理员电子邮箱是否被占用，如果被占用，则抛出异常
+
         //将相册数据写入到数据库中
         Admin album = new Admin();
         BeanUtils.copyProperties(adminAddNewParam, album);
