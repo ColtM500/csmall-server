@@ -30,7 +30,7 @@ public class AdminController {
     @PostMapping("/add-new")
     @ApiOperation("添加管理员")
     @ApiOperationSupport(order = 100)
-    public JsonResult addNew(@Valid AdminAddNewParam albumAddNewParam) {
+    public JsonResult addNew(AdminAddNewParam albumAddNewParam) {
         log.debug("开始处理【添加管理员】的请求，参数：{}", albumAddNewParam);
         service.addNew(albumAddNewParam);
         return JsonResult.ok();

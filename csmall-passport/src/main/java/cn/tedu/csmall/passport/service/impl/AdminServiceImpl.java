@@ -50,7 +50,12 @@ public class AdminServiceImpl implements IAdminService {
         BeanUtils.copyProperties(adminAddNewParam, admin);
         admin.setGmtCreate(LocalDateTime.now());
         admin.setGmtModified(LocalDateTime.now());
-        adminMapper.insert(admin);
+        int rows = adminMapper.insert(admin);
+        if (rows != 1) {
+            String message = "添加管理员失败，服务器忙，请稍后再试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+        }
         log.debug("将新的管理员数据写入到数据库中，完成!");
 
         //将管理员与角色的关联数据写入到数据库中
@@ -64,7 +69,12 @@ public class AdminServiceImpl implements IAdminService {
             adminRole.setGmtModified(LocalDateTime.now());
             adminRoleList[i] = adminRole;
         }
-        adminRoleMapper.insertBatch(adminRoleList);
+        rows = adminRoleMapper.insertBatch(adminRoleList);
+        if (rows != adminRoleList.length) {
+            String message = "添加管理员失败，服务器忙，请稍后再试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+        }
         log.debug("将新的管理员与角色关联的数据插入到数据库中，完成!");
     }
 }
