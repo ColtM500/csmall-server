@@ -188,10 +188,15 @@ public class AlbumServiceImpl implements IAlbumService {
 
     @Override
     public PageData<AlbumListItemVO> list(Integer pageNum, Integer pageSize) {
+        //打印开始处理分页信息
         log.debug("开始处理【查询相册列表】的业务，页码：{}，每页记录数：{}", pageNum, pageSize);
+        //开始分页
         PageHelper.startPage(pageNum, pageSize);
+        //调用mapper进行数据库处理的分页查询
         List<AlbumListItemVO> list = albumMapper.list();
+        //将所查信息用pageInfo装起来
         PageInfo<AlbumListItemVO> pageInfo = new PageInfo<>(list);
+        //用Convert的api将pageInfo转程pageData
         PageData<AlbumListItemVO> pageData = PageInfoToPageDataConvert.convert(pageInfo);
         log.debug("查询完成，即将返回：{}", pageData);
         return pageData;
