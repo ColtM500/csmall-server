@@ -1,6 +1,7 @@
-package cn.tedu.csmall.product.util;
+package cn.tedu.csmall.passport.util;
 
-import cn.tedu.csmall.product.pojo.vo.PageData;
+
+import cn.tedu.csmall.passport.pojo.vo.PageData;
 import com.github.pagehelper.PageInfo;
 
 /**
