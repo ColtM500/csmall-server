@@ -18,7 +18,7 @@ public class AdminMapperTests {
     @Test
     void insert() {
         Admin admin = new Admin();
-        admin.setUsername("测试用户名001");
+        admin.setUsername("测试用户名002");
         admin.setPassword("测试密码001");
         admin.setDescription("测试简介001");
         admin.setGmtCreate(LocalDateTime.now());

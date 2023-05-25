@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RoleMapper extends BaseMapper<RoleListItemVO> {
+public interface RoleMapper  {
 
     List<RoleListItemVO> list();
 }
