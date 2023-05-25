@@ -6,6 +6,7 @@ import cn.tedu.csmall.passport.mapper.AdminRoleMapper;
 import cn.tedu.csmall.passport.pojo.entity.Admin;
 import cn.tedu.csmall.passport.pojo.entity.AdminRole;
 import cn.tedu.csmall.passport.pojo.param.AdminAddNewParam;
+import cn.tedu.csmall.passport.pojo.param.AdminLoginInfoParam;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
 import cn.tedu.csmall.passport.pojo.vo.PageData;
 import cn.tedu.csmall.passport.service.IAdminService;
@@ -17,6 +18,9 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +37,20 @@ public class AdminServiceImpl implements IAdminService {
 
     @Autowired
     private AdminRoleMapper adminRoleMapper;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Override
+    public void login(AdminLoginInfoParam adminLoginInfoParam) {
+        log.debug("开始处理【管理员登录】的业务，参数:{}", adminLoginInfoParam);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                adminLoginInfoParam.getUsername(),
+                adminLoginInfoParam.getPassword()
+        );
+        authenticationManager.authenticate(authentication);
+        log.debug("验证登录完成!");
+    }
 
     @Override
     public void addNew(AdminAddNewParam adminAddNewParam) {

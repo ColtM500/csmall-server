@@ -2,6 +2,7 @@ package cn.tedu.csmall.passport.mapper;
 
 import cn.tedu.csmall.passport.pojo.entity.Admin;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
+import cn.tedu.csmall.passport.pojo.vo.AdminLoginInfoVO;
 import cn.tedu.csmall.passport.pojo.vo.PageData;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -43,11 +44,18 @@ public class AdminMapperTests {
 
     @Test
     void list() {
-        List<AdminListItemVO> list = mapper.list();
+         List<AdminListItemVO> list = mapper.list();
         log.debug("查询列表完成，结果：{}", list);
         for (Object item : list) {
             log.debug("列表项：{}", item);
         }
+    }
+
+    @Test
+    void getStandardById(){
+        String username = "root";
+        Object queryResult = mapper.getLoginInfoByUsername(username);
+        System.out.println("根据【username=" + username + "】查询数据完成，结果：" + queryResult);
     }
 
 }

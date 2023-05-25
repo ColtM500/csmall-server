@@ -35,4 +35,12 @@
         <result column="login_count" property="loginCount"/>
         <result column="gmt_last_login" property="gmtLastLogin"/>
     </resultMap>
+
+<!--    AdminLoginInfoVO getLoginInfoByUsername(String username);-->
+    <select id="getLoginInfoByUsername" resultType="cn.tedu.csmall.passport.pojo.vo.AdminLoginInfoVO">
+        select
+            username, password, enable
+        from ams_admin
+        where username=#{username}
+    </select>
 </mapper>

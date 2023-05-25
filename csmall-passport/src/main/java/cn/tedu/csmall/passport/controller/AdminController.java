@@ -1,6 +1,7 @@
 package cn.tedu.csmall.passport.controller;
 
 import cn.tedu.csmall.passport.pojo.param.AdminAddNewParam;
+import cn.tedu.csmall.passport.pojo.param.AdminLoginInfoParam;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
 import cn.tedu.csmall.passport.pojo.vo.PageData;
 import cn.tedu.csmall.passport.pojo.vo.RoleListItemVO;
@@ -28,6 +29,16 @@ public class AdminController {
 
     @Autowired
     private IAdminService service;
+
+    // http://localhost:9181/admin/login
+    @PostMapping("/login")
+    @ApiOperation("管理员登录")
+    @ApiOperationSupport(order = 50)
+    public JsonResult login(AdminLoginInfoParam adminLoginInfoParam){
+        log.debug("开始处理【管理员登录】的请求，参数:{}", adminLoginInfoParam);
+        service.login(adminLoginInfoParam);
+        return JsonResult.ok();
+    }
 
     // http://localhost:9181/admin/add-new
     @PostMapping("/add-new")
