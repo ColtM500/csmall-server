@@ -30,13 +30,13 @@ public class RoleController {
 
     // http://localhost:9181/roles/list
     @GetMapping("/list")
-    @ApiOperation("查询管理员列表")
+    @ApiOperation("查询管理员角色列表")
     @ApiOperationSupport(order = 420)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "页码", paramType = "query")
     })
-    public JsonResult list(@Range(min = 1, message = "查询管理员列表失败，请提供正确的页码值!") Integer page){
-        log.debug("开始处理【查询管理员列表】的请求，页码：{}", page);
+    public JsonResult list(@Range(min = 1, message = "查询管理员角色列表失败，请提供正确的页码值!") Integer page){
+        log.debug("开始处理【查询管理员角色列表】的请求，页码：{}", page);
         if (page == null || page < 1){
             page = 1;
         }

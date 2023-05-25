@@ -6,9 +6,14 @@ import cn.tedu.csmall.passport.mapper.AdminRoleMapper;
 import cn.tedu.csmall.passport.pojo.entity.Admin;
 import cn.tedu.csmall.passport.pojo.entity.AdminRole;
 import cn.tedu.csmall.passport.pojo.param.AdminAddNewParam;
+import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
+import cn.tedu.csmall.passport.pojo.vo.PageData;
 import cn.tedu.csmall.passport.service.IAdminService;
+import cn.tedu.csmall.passport.util.PageInfoToPageDataConvert;
 import cn.tedu.csmall.passport.web.ServiceCode;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -77,4 +83,23 @@ public class AdminServiceImpl implements IAdminService {
         }
         log.debug("将新的管理员与角色关联的数据插入到数据库中，完成!");
     }
+
+    @Override
+    public PageData<AdminListItemVO> list(Integer pageNum) {
+        log.debug("开始处理【查询管理员列表】的业务，页码:{}", pageNum);
+        Integer pageSize = 5;
+        return list(pageNum, pageSize);
+    }
+
+    @Override
+    public PageData<AdminListItemVO> list(Integer pageNum, Integer pageSize) {
+        log.debug("开始处理【查询管理员列表】的业务，页码：{}，每页记录数：{}", pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<AdminListItemVO> list = adminMapper.list();
+        PageInfo<AdminListItemVO> pageInfo = new PageInfo<>(list);
+        PageData<AdminListItemVO> pageData = PageInfoToPageDataConvert.convert(pageInfo);
+        log.debug("查询完成，即将返回：{}", pageData);
+        return pageData;
+    }
+
 }

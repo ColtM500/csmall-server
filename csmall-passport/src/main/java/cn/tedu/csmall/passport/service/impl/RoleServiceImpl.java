@@ -35,7 +35,7 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public PageData<RoleListItemVO> list(Integer pageNum, Integer pageSize) {
-        log.debug("开始处理【查询相册列表】的业务，页码：{}，每页记录数：{}", pageNum, pageSize);
+        log.debug("开始处理【查询角色列表】的业务，页码：{}，每页记录数：{}", pageNum, pageSize);
         PageHelper.startPage(pageNum, pageSize);
         List<RoleListItemVO> roleList = mapper.list();
         PageInfo<RoleListItemVO> pageInfo = new PageInfo<>(roleList);
