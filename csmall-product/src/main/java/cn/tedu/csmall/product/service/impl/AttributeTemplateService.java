@@ -41,7 +41,12 @@ public class AttributeTemplateService implements IAttributeTemplateService {
         attributeTemplate.setGmtCreate(LocalDateTime.now());
         attributeTemplate.setGmtModified(LocalDateTime.now());
 
-        attributeTemplateMapper.insert(attributeTemplate);
+        int rows = attributeTemplateMapper.insert(attributeTemplate);
+        if (rows!=1){
+            String message = "添加属性模板失败，服务器忙，请稍后再试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+        }
         log.debug("将新的属性模板数据写入到数据库中，完成!");
     }
 }

@@ -39,7 +39,12 @@ public class CategoryAddNewParamService implements ICategoryService {
         category.setGmtCreate(LocalDateTime.now());
         category.setGmtModified(LocalDateTime.now());
 
-        categoryMapper.insert(category);
+        int rows = categoryMapper.insert(category);
+        if (rows!=1){
+            String message = "添加类别失败，类别名称已被占用！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+        }
         log.debug("将类别名称写入到数据库中，完成!");
     }
 }

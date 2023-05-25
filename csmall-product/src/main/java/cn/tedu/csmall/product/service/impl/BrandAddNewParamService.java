@@ -40,7 +40,12 @@ public class BrandAddNewParamService implements IBrandService {
         brand.setGmtCreate(LocalDateTime.now());
         brand.setGmtModified(LocalDateTime.now());
 
-        brandMapper.insert(brand);
+        int rows = brandMapper.insert(brand);
+        if (rows!=1){
+            String message = "添加品牌失败，品牌名称已被占用!";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+        }
         log.debug("将品牌名称写入到数据库中，完成!");
     }
 }

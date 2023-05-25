@@ -8,3 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ICategoryService {
     void addNew(CategoryAddNewParam categoryAddNewParam);
 }
+
+

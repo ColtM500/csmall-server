@@ -62,8 +62,12 @@ public class AlbumServiceImpl implements IAlbumService {
         BeanUtils.copyProperties(albumAddNewParam, album);
         album.setGmtCreate(LocalDateTime.now());
         album.setGmtModified(LocalDateTime.now());
-
-        albumMapper.insert(album);
+        int rows = albumMapper.insert(album);
+        if (rows!=1){
+            String message = "添加相册失败，服务器忙，请稍后再试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+        }
         log.debug("将新的相册数据写入到数据库中，完成!");
     }
 
