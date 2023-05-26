@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class AdminLoginInfoVO implements Serializable {
 
+    private Long id;
     private String username;
     private String password;
     private Integer enable;

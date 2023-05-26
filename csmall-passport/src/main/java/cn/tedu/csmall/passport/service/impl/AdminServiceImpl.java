@@ -47,6 +47,8 @@ public class AdminServiceImpl implements IAdminService {
     public void login(AdminLoginInfoParam adminLoginInfoParam) {
         log.debug("开始处理【管理员登录】的业务，参数:{}", adminLoginInfoParam);
         //创建认证时所需的参数对象
+            //此处是service拿出controller传过来的用户名和密码
+            // 之所以要创建这个Authentication 是因为下面的authenticationManager.authenticate（）只装authentication对象
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 adminLoginInfoParam.getUsername(),
                 adminLoginInfoParam.getPassword()

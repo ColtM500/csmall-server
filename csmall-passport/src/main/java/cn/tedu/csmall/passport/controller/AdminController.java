@@ -5,8 +5,10 @@ import cn.tedu.csmall.passport.pojo.param.AdminLoginInfoParam;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
 import cn.tedu.csmall.passport.pojo.vo.PageData;
 import cn.tedu.csmall.passport.pojo.vo.RoleListItemVO;
+import cn.tedu.csmall.passport.security.AdminDetails;
 import cn.tedu.csmall.passport.service.IAdminService;
 import cn.tedu.csmall.passport.web.JsonResult;
+import cn.tedu.csmall.passport.web.ServiceCode;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -15,8 +17,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -66,5 +71,16 @@ public class AdminController {
         //ok返回JsonResult对象 由于返回了链式写法 每个set方法都返回了当前对象 可作为当前JsonResult方法的返回值
         //否则平时set方法的返回值都是void
         return JsonResult.ok().setData(pageData);
+    }
+
+    // http://localhost:9181/admin/list1
+    @GetMapping("/list1")
+    @ApiOperation("查询管理员列表")
+    @ApiOperationSupport(order = 420)
+    //API文档会把userDetails误认为传递的值 故会要你填值 所以要加上@ApiIgnore
+    public JsonResult list1(@ApiIgnore @AuthenticationPrincipal AdminDetails adminDetails){
+        log.debug("当事人的ID为：{}", adminDetails.getId());
+        log.debug("当事人的用户名为：{}", adminDetails.getUsername());
+        return JsonResult.fail(ServiceCode.ERR_UNKNOWN, "此功能尚未实现");
     }
 }

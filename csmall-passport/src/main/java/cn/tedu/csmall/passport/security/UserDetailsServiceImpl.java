@@ -4,11 +4,16 @@ import cn.tedu.csmall.passport.mapper.AdminMapper;
 import cn.tedu.csmall.passport.pojo.vo.AdminLoginInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * 用这个类实现UserDetailsService接口 实现使用自定义的账号登录
@@ -37,15 +42,25 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         log.debug("用户名匹配成功!准备返回此用户匹配的UserDetails类型的对象");
-        UserDetails userDetails = User.builder()
-                .username(loginInfoVO.getUsername())
-                .password(loginInfoVO.getPassword())
-                .disabled(loginInfoVO.getEnable()==0)// 账号状态是否禁用
-                .accountLocked(false)// 账号状态是否锁定
-                .accountExpired(false)// 账号状态是否过期
-                .credentialsExpired(false) // 账号的凭证是否过期
-                .authorities("这是一个临时使用的山寨的权限！！！")// 权限
-                .build();
+
+        //由于之前是直接使用userDetails可以用数组来表示权限 但在此处用集合表示
+        Collection<GrantedAuthority> authorities = new ArrayList<>();//创建放权限的列表
+        GrantedAuthority authority = new SimpleGrantedAuthority("临时使用的山寨的权限");//放权限的实现类
+        authorities.add(authority);
+
+        AdminDetails userDetails = new AdminDetails(
+                loginInfoVO.getId(), loginInfoVO.getUsername(), loginInfoVO.getPassword(),
+                loginInfoVO.getEnable()==1, authorities);
+
+//        UserDetails userDetails = User.builder()
+//                .username(loginInfoVO.getUsername())
+//                .password(loginInfoVO.getPassword())
+//                .disabled(loginInfoVO.getEnable()==0)// 账号状态是否禁用
+//                .accountLocked(false)// 账号状态是否锁定
+//                .accountExpired(false)// 账号状态是否过期
+//                .credentialsExpired(false) // 账号的凭证是否过期
+//                .authorities("这是一个临时使用的山寨的权限！！！")// 权限
+//                .build();
         log.debug("即将向Spring Security返回UserDetails类型的对象:{}", userDetails);
         return userDetails;
     }

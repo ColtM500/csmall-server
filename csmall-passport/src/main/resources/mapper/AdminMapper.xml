@@ -39,7 +39,7 @@
 <!--    AdminLoginInfoVO getLoginInfoByUsername(String username);-->
     <select id="getLoginInfoByUsername" resultType="cn.tedu.csmall.passport.pojo.vo.AdminLoginInfoVO">
         select
-            username, password, enable
+            id,username, password, enable
         from ams_admin
         where username=#{username}
     </select>
