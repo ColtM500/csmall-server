@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 用这个类实现UserDetailsService接口 实现使用自定义的账号登录
@@ -36,17 +37,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.debug("Spring Security框架自动调用了UserDetailsServiceImpl.loadUserByUsername()方法，用户名：{}", s);
         //根据用户名从数据库查询匹配的用户信息
         AdminLoginInfoVO loginInfoVO = mapper.getLoginInfoByUsername(s);
+        log.debug("根据用户名【{}】从数据库中查询匹配的管理员信息，结果:{}",s,loginInfoVO);
         if (loginInfoVO==null){
             log.debug("此用户没有匹配的用户数据，将返回null");
             return null;
         }
 
         log.debug("用户名匹配成功!准备返回此用户匹配的UserDetails类型的对象");
-
+        List<String> permissions = loginInfoVO.getPermissions();//之前创建的权限列表
         //由于之前是直接使用userDetails可以用数组来表示权限 但在此处用集合表示
         Collection<GrantedAuthority> authorities = new ArrayList<>();//创建放权限的列表
-        GrantedAuthority authority = new SimpleGrantedAuthority("临时使用的山寨的权限");//放权限的实现类
-        authorities.add(authority);
+        for (String permission : permissions) {//把权限列表里每个权限都遍历
+            GrantedAuthority authority = new SimpleGrantedAuthority(permission);//放权限的实现类
+            authorities.add(authority);
+        }
 
         AdminDetails userDetails = new AdminDetails(
                 loginInfoVO.getId(), loginInfoVO.getUsername(), loginInfoVO.getPassword(),

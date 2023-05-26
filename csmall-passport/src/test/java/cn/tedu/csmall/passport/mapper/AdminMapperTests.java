@@ -42,6 +42,7 @@ public class AdminMapperTests {
 //    }
     }
 
+    //查不了是因为里面一个人对应多个权限 无法用列表表现
     @Test
     void list() {
          List<AdminListItemVO> list = mapper.list();
@@ -52,7 +53,7 @@ public class AdminMapperTests {
     }
 
     @Test
-    void getStandardById(){
+    void getLoginInfoByUsername(){
         String username = "root";
         Object queryResult = mapper.getLoginInfoByUsername(username);
         System.out.println("根据【username=" + username + "】查询数据完成，结果：" + queryResult);

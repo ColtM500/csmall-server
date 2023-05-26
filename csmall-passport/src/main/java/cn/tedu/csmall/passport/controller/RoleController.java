@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class RoleController {
 
     // http://localhost:9181/roles/list
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('/ams/admin/read')")
     @ApiOperation("查询管理员角色列表")
     @ApiOperationSupport(order = 420)
     @ApiImplicitParams({
