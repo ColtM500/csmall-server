@@ -1,14 +1,25 @@
 package cn.tedu.csmall.passport.config;
 
+import cn.tedu.csmall.passport.web.JsonResult;
+import cn.tedu.csmall.passport.web.ServiceCode;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @Slf4j
 @Configuration
@@ -28,6 +39,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //处理未通过认证时访问受保护的资源时拒绝访问  需要接口类型的对象 定义一个匿名内部类
+        http.exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
+            @Override
+            public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+                response.setContentType("application/json; charset=utf-8");//文档类型 编码格式
+                String message = "您当前未登录，请先登录!";
+                log.warn(message);
+                //此处为什么要加fastjson依赖？因为要传递字符串发送到前端时需要以json形式 此时需要加此依赖转换（反之json也可转为字符串）
+                JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_UNAUTHORIZED, message);
+                String s = JSON.toJSONString(jsonResult);//将字符串对象放进去放入 转变为Json格式的字符串
+                PrintWriter printWriter = response.getWriter();
+                printWriter.println(s);//显示一串？？？ java内部的编码未ISO-8859-1 不支持中文编码这样
+                printWriter.close();
+            }
+        });
 
         //框架设计了“防止伪造的跨域攻击”的防御机制 默认自定义的post请求不可用 故要配置防御机制
         //禁用“防止伪造的跨域攻击”
