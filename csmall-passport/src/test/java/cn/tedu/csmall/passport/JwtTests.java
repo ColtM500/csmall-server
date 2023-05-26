@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class JwtTests {
 
-    String secretKey = "sbwwwcccccccccccccccccccccccccccccccccccccccccccccc1";//不太简单的 难以预测的字符串
+    String secretKey = "sbbbcccccccccccccccccc";//不太简单的 难以预测的字符串
 
     //生成Jwt
     @Test
@@ -27,7 +27,7 @@ public class JwtTests {
                 .setHeaderParam("typ","JWT")
                 //Payload
                 .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis()+3*60*1000))//以毫秒为时间单位的
+                .setExpiration(new Date(System.currentTimeMillis()+30*24*60*60*1000))//以毫秒为时间单位的
                 //Verified
                 .signWith(SignatureAlgorithm.HS256,secretKey)
                 //生成
@@ -41,17 +41,17 @@ public class JwtTests {
     //解析Jwt
     @Test
     void parse(){
-        String jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoi5byg5LiJIiwiaWQiOjk1MjcsImV4cCI6MTY4NTA5MzA2M30.VAMpBScNxYjf2YLffbiObrtHJohJ00aulLOvgGFAWKs";
+        String jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZXhwIjoxNjg3NjkxNTA3LCJ1c2VybmFtZSI6IndhbmdrZWppbmcifQ.qv-yDBs4gxG-1p7i06pSNzbGwgQuc4rjPIt6E7vM1gU";
         //这个setSigningKey()在上面创建用的时候是这个 解析的时候还是要这个 保持统一 是保密数据
         Claims claims = Jwts
                 .parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(jwt)
                 .getBody();
-        Object id = claims.get("id");
-        Object name = claims.get("name");
+        Object id = claims.get("id", Long.class);
+        Object username = claims.get("username", String.class);
         System.out.println("id="+id);
-        System.out.println("name="+name);
+        System.out.println("username="+username);
     }
 
 }

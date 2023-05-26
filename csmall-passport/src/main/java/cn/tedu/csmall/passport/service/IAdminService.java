@@ -11,7 +11,12 @@ import java.util.List;
 @Transactional
 public interface IAdminService {
 
-    void login(AdminLoginInfoParam adminLoginInfoParam);
+    /**
+     * 管理员登录
+     * @param adminLoginInfoParam
+     * @return 此管理员的信息对应的JWT数据
+     */
+    String login(AdminLoginInfoParam adminLoginInfoParam);
 
     void addNew(AdminAddNewParam adminAddNewParam);
 

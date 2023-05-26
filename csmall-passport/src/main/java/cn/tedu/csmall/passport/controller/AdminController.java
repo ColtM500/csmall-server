@@ -41,8 +41,8 @@ public class AdminController {
     @ApiOperationSupport(order = 50)
     public JsonResult login(AdminLoginInfoParam adminLoginInfoParam){
         log.debug("开始处理【管理员登录】的请求，参数:{}", adminLoginInfoParam);
-        service.login(adminLoginInfoParam);
-        return JsonResult.ok();
+        String jwt = service.login(adminLoginInfoParam);
+        return JsonResult.ok(jwt);
     }
 
     // http://localhost:9181/admin/add-new

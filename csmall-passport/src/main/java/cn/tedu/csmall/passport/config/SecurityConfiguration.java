@@ -1,9 +1,11 @@
 package cn.tedu.csmall.passport.config;
 
+import cn.tedu.csmall.passport.filter.JwtAuthorizationFilter;
 import cn.tedu.csmall.passport.web.JsonResult;
 import cn.tedu.csmall.passport.web.ServiceCode;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +45,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Autowired
+    private JwtAuthorizationFilter jwtAuthorizationFilter;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //将JWT过滤器添加到Spring Security框架的某些过滤器之前
+            //因为如果先是Spring Security的过滤器检验发现没有验证信息 直接让它滚
+            //但其实自己定义的过滤器还没有进行解析jwt 所以还没有验证信息存入到SecurityContext中
+            //合理的流程：先用自己的过滤器先执行 再用相关的认证信息存到Security上下文中 然后Security框架再去检验
+        http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+
+
         //处理未通过认证时访问受保护的资源时拒绝访问  需要接口类型的对象 定义一个匿名内部类
         http.exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
             @Override

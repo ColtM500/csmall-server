@@ -9,12 +9,15 @@ import cn.tedu.csmall.passport.pojo.param.AdminAddNewParam;
 import cn.tedu.csmall.passport.pojo.param.AdminLoginInfoParam;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
 import cn.tedu.csmall.passport.pojo.vo.PageData;
+import cn.tedu.csmall.passport.security.AdminDetails;
 import cn.tedu.csmall.passport.service.IAdminService;
 import cn.tedu.csmall.passport.util.PageInfoToPageDataConvert;
 import cn.tedu.csmall.passport.web.ServiceCode;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -44,7 +50,7 @@ public class AdminServiceImpl implements IAdminService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public void login(AdminLoginInfoParam adminLoginInfoParam) {
+    public String login(AdminLoginInfoParam adminLoginInfoParam) {
         log.debug("开始处理【管理员登录】的业务，参数:{}", adminLoginInfoParam);
         //创建认证时所需的参数对象
             //此处是service拿出controller传过来的用户名和密码
@@ -56,9 +62,36 @@ public class AdminServiceImpl implements IAdminService {
         //执行认证 并获取认证结果
         Authentication authenticateResult = authenticationManager.authenticate(authentication);
         log.debug("验证登录完成,认证结果:{}", authenticateResult);
+
+        //从认证结果中取出所需的数据->当事人 认证结果的当事人就是UserDetailService返回的数据 AdminDetails里的数据
+        Object principal = authenticateResult.getPrincipal();
+        AdminDetails adminDetails = (AdminDetails) principal;
+
+        //生成JWT
+        String secretKey = "sbbbcccccccccccccccccc";
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", adminDetails.getId());
+        claims.put("username", adminDetails.getUsername());
+        String jwt = Jwts.builder()
+                //Header
+                .setHeaderParam("alg", "HS256")
+                .setHeaderParam("typ", "JWT")
+                //Payload
+                .setClaims(claims)
+                .setExpiration(new Date(System.currentTimeMillis()+30L*24*60*60*1000))//30后不加L超出了上线 直接过期
+                //Verify Signature
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                //生成
+                .compact();
+        log.debug("生成了此管理员的信息对应的JWT:{}", jwt);
+        return jwt;
+
+        //==============================使用JWT之后这部分就不用了
         //将认证结果存入到SecurityContext中
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authenticateResult);
+//        SecurityContext securityContext = SecurityContextHolder.getContext();
+//        securityContext.setAuthentication(authenticateResult);
+
+
     }
 
     @Override
