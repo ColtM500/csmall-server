@@ -84,6 +84,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
+        <!-- JJWT（Java JWT） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
         <!-- Spring Boot测试的依赖项 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
