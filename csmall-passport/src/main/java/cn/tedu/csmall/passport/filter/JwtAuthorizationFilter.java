@@ -40,7 +40,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         log.debug("JwtAuthorizationFilter开始执行……");
 
-        //根据业内管用的做法，客户端会将JWT放在请求头(Request Header)中的Authorization属性中
+        //根据业内惯用的做法，客户端会将JWT放在请求头(Request Header)中的Authorization属性中
         String jwt = request.getHeader("Authorization");
         log.debug("客户端携带的JWT:{}",jwt);
         log.debug("输出当前的secretKey1: "+secretKey);
@@ -52,26 +52,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
 
-        log.debug("输出当前的secretKey1: "+secretKey);
+        log.debug("输出当前的secretKey11: "+secretKey);
 
         //尝试解析JWT
         response.setContentType("application/json; charset=utf-8");
         Claims claims = null;
-        try {
             claims = Jwts
             .parser()
             .setSigningKey(secretKey)
             .parseClaimsJws(jwt)
             .getBody();
-        } catch (ExpiredJwtException e) {
-            e.printStackTrace();
-        } catch (MalformedJwtException e) {
-            e.printStackTrace();
-        } catch (SignatureException e) {
-            e.printStackTrace();
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
 
         //尝试获取JWT中的数据
         Long id = claims.get("id", Long.class);

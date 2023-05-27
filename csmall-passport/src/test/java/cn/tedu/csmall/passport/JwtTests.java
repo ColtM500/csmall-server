@@ -14,10 +14,10 @@ import java.util.Map;
 @Slf4j
 public class JwtTests {
 
-//    String secretKey = "sbbbcccccccccccccccccc";//不太简单的 难以预测的字符串
+    String secretKey = "sbbbcccccccccccccccccc";//不太简单的 难以预测的字符串
 
-    @Value("${xxx}")
-     String secretKey;
+//    @Value("${xxx}")
+//     String secretKey;
 
     //生成Jwt
     @Test
