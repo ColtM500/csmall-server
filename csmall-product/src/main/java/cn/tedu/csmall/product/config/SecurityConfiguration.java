@@ -54,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 开启Spring Security自带的CorsFilter，以解决跨域问题
+            //这是为了前端的PreFlight中的options可能会被拦截 所以开启这个使请求头中的复杂请求可以通过
         http.cors();
 
         // 配置Spring Security框架使用（创建）Session的策略
@@ -82,7 +83,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             }
         });
 
-        // 禁用“防止伪造的跨域攻击的防御机制”
+        // 禁用“防止伪造的跨域攻击的防御机制” 不然POST请求用不了
         http.csrf().disable();
 
         // 白名单
