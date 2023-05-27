@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -50,6 +51,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //配置Spring Security框架使用（创建) Session的策略
+        //STATELESS：无状态的 完全不适用Session
+        //NEVER: 从不主动创建session 但是 当session已经被创建后，仍会正常使用
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         //将JWT过滤器添加到Spring Security框架的某些过滤器之前
             //因为如果先是Spring Security的过滤器检验发现没有验证信息 直接让它滚
             //但其实自己定义的过滤器还没有进行解析jwt 所以还没有验证信息存入到SecurityContext中

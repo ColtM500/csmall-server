@@ -11,7 +11,7 @@ logging:
   level:
     cn.tedu.csmall: trace
 
-#csmall:
-#  jwt:
-#    secret-key: jhdSfkkjKJ3831HdsDkdfSA9jklJD749Fhsa34fdsKf08dfjFhkdfs
-#    duration-in-minute: 43200
+csmall:
+  jwt:
+    secret-key: jhdSfkkjKJ3831HdsDkdfSA9KSIjklJD749Fhsa34fMOdsKf08dfjFhkdfs
+    duration-in-minute: 43200

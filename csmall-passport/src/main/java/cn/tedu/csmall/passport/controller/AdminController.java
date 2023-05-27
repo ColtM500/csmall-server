@@ -6,6 +6,7 @@ import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
 import cn.tedu.csmall.passport.pojo.vo.PageData;
 import cn.tedu.csmall.passport.pojo.vo.RoleListItemVO;
 import cn.tedu.csmall.passport.security.AdminDetails;
+import cn.tedu.csmall.passport.security.LoginPrincipal;
 import cn.tedu.csmall.passport.service.IAdminService;
 import cn.tedu.csmall.passport.web.JsonResult;
 import cn.tedu.csmall.passport.web.ServiceCode;
@@ -78,9 +79,9 @@ public class AdminController {
     @ApiOperation("查询管理员列表")
     @ApiOperationSupport(order = 420)
     //API文档会把userDetails误认为传递的值 故会要你填值 所以要加上@ApiIgnore
-    public JsonResult list1(@ApiIgnore @AuthenticationPrincipal AdminDetails adminDetails){
-        log.debug("当事人的ID为：{}", adminDetails.getId());
-        log.debug("当事人的用户名为：{}", adminDetails.getUsername());
+    public JsonResult list1(@ApiIgnore  @AuthenticationPrincipal LoginPrincipal loginPrincipal){
+        log.debug("当事人ID:{}", loginPrincipal.getId());
+        log.debug("当事人用户名:{}", loginPrincipal.getUsername());
         return JsonResult.fail(ServiceCode.ERR_UNKNOWN, "此功能尚未实现");
     }
 }

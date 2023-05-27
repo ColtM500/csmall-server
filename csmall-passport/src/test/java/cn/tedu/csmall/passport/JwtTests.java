@@ -3,19 +3,27 @@ package cn.tedu.csmall.passport;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class JwtTests {
 
-    String secretKey = "sbbbcccccccccccccccccc";//不太简单的 难以预测的字符串
+//    String secretKey = "sbbbcccccccccccccccccc";//不太简单的 难以预测的字符串
+
+    @Value("${xxx}")
+     String secretKey;
 
     //生成Jwt
     @Test
     void generate(){
+
+        log.debug("当前secretKey为： "+secretKey);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("id",9527);

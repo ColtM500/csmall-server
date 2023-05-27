@@ -13,6 +13,7 @@ import cn.tedu.csmall.passport.security.AdminDetails;
 import cn.tedu.csmall.passport.service.IAdminService;
 import cn.tedu.csmall.passport.util.PageInfoToPageDataConvert;
 import cn.tedu.csmall.passport.web.ServiceCode;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,24 +22,29 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
-@Transactional
+//@Transactional
 public class AdminServiceImpl implements IAdminService {
+
+    @Value("${csmall.jwt.secret-key}")
+    private String secretKey;
+
+    @Value("${csmall.jwt.duration-in-minute}")
+    private Long durationInMinute;
 
     @Autowired
     private AdminMapper adminMapper;
@@ -48,6 +54,10 @@ public class AdminServiceImpl implements IAdminService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    public AdminServiceImpl() {
+        log.debug("创建业务类对象:AdminServiceImpl");
+    }
 
     @Override
     public String login(AdminLoginInfoParam adminLoginInfoParam) {
@@ -59,6 +69,7 @@ public class AdminServiceImpl implements IAdminService {
                 adminLoginInfoParam.getUsername(),
                 adminLoginInfoParam.getPassword()
         );
+
         //执行认证 并获取认证结果
         Authentication authenticateResult = authenticationManager.authenticate(authentication);
         log.debug("验证登录完成,认证结果:{}", authenticateResult);
@@ -66,19 +77,21 @@ public class AdminServiceImpl implements IAdminService {
         //从认证结果中取出所需的数据->当事人 认证结果的当事人就是UserDetailService返回的数据 AdminDetails里的数据
         Object principal = authenticateResult.getPrincipal();
         AdminDetails adminDetails = (AdminDetails) principal;
+        Collection<GrantedAuthority> authorities = adminDetails.getAuthorities();
 
         //生成JWT
-        String secretKey = "sbbbcccccccccccccccccc";
+        log.debug("输出当前的secretKey: "+secretKey);
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", adminDetails.getId());
         claims.put("username", adminDetails.getUsername());
+        claims.put("authoritiesJsonString", JSON.toJSONString(authorities));
         String jwt = Jwts.builder()
                 //Header
                 .setHeaderParam("alg", "HS256")
                 .setHeaderParam("typ", "JWT")
                 //Payload
                 .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis()+30L*24*60*60*1000))//30后不加L超出了上线 直接过期
+                .setExpiration(new Date(System.currentTimeMillis()+durationInMinute*60*1000))// /1000 /60 以分钟为单位
                 //Verify Signature
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 //生成
