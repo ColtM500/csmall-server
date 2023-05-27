@@ -1,16 +1,14 @@
-package cn.tedu.csmall.passport.filter;
+package cn.tedu.csmall.product.filter;
 
-import cn.tedu.csmall.passport.security.LoginPrincipal;
-import cn.tedu.csmall.passport.web.JsonResult;
-import cn.tedu.csmall.passport.web.ServiceCode;
+import cn.tedu.csmall.product.security.LoginPrincipal;
+import cn.tedu.csmall.product.web.JsonResult;
+import cn.tedu.csmall.product.web.ServiceCode;
 import com.alibaba.fastjson.JSON;
-import com.sun.corba.se.spi.ior.ObjectKey;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,12 +16,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Collection;
 
 

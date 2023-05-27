@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @Slf4j
@@ -32,20 +34,12 @@ public class RoleController {
     // http://localhost:9181/roles/list
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('/ams/admin/read')")
-    @ApiOperation("查询管理员角色列表")
+    @ApiOperation("查询角色列表")
     @ApiOperationSupport(order = 420)
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页码", paramType = "query")
-    })
-    public JsonResult list(@Range(min = 1, message = "查询管理员角色列表失败，请提供正确的页码值!") Integer page){
-        log.debug("开始处理【查询管理员角色列表】的请求，页码：{}", page);
-        if (page == null || page < 1){
-            page = 1;
-        }
-        PageData<RoleListItemVO> pageData = service.list(page);
-        //ok返回JsonResult对象 由于返回了链式写法 每个set方法都返回了当前对象 可作为当前JsonResult方法的返回值
-        //否则平时set方法的返回值都是void
-        return JsonResult.ok().setData(pageData);
+    public JsonResult list() {
+        log.debug("开始处理【查询角色列表】的请求，无参数");
+        List<RoleListItemVO> list = service.list();
+        return JsonResult.ok(list);
     }
 
 }

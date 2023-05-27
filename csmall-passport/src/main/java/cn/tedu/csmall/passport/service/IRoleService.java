@@ -11,7 +11,7 @@ public interface IRoleService {
 
     List<RoleListItemVO> list();
 
-    PageData<RoleListItemVO> list (Integer pageNum);
+//    PageData<RoleListItemVO> list (Integer pageNum);
 
-    PageData<RoleListItemVO> list (Integer pageNum, Integer pageSize);
+//    PageData<RoleListItemVO> list (Integer pageNum, Integer pageSize);
 }

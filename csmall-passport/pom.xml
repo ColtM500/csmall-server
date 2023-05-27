@@ -19,11 +19,6 @@
 
     <!-- 当前项目使用的依赖项 -->
     <dependencies>
-<!--        &lt;!&ndash; JJWT（Java JWT） &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>io.jsonwebtoken</groupId>-->
-<!--            <artifactId>jjwt</artifactId>-->
-<!--        </dependency>-->
         <!-- fastjson：实现对象与JSON的相互转换 -->
         <dependency>
             <groupId>com.alibaba</groupId>

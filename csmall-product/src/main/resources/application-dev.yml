@@ -9,3 +9,8 @@ logging:
     cn.tedu.csmall: trace
 server:
   port: 9180
+
+csmall:
+  jwt:
+    secret-key: jhdSfkkjKJ3831HdsDkdfSA9KSIjklJD749Fhsa34fMOdsKf08dfjFhkdfs
+    duration-in-minute: 43200
