@@ -130,11 +130,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 principal,credentials,authorities
         );
+        log.debug("创建信息完成111");
 
         //将认证结果存入到SecurityContext中
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
-
+        log.debug("存入当事人完成111");
         //放行
         filterChain.doFilter(request, response);
     }

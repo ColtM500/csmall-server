@@ -1,4 +1,4 @@
-package cn.tedu.csmall.product.pojo.vo;
+package cn.tedu.csmall.commons.pojo.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

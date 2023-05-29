@@ -1,11 +1,13 @@
 spring:
   profiles:
     active: dev
+  jackson:
+    default-property-inclusion: non_null
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      initial-size: 5
-      max-active: 10
+      max-active: 50
+      min-idle: 2
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

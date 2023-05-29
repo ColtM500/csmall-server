@@ -1,5 +1,6 @@
 package cn.tedu.csmall.passport.filter;
 
+import cn.tedu.csmall.commons.security.LoginPrincipal;
 import cn.tedu.csmall.commons.web.JsonResult;
 import cn.tedu.csmall.commons.web.ServiceCode;
 import com.alibaba.fastjson.JSON;
@@ -68,7 +69,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             log.warn("程序运行过程中出现了ExpiredJwtException，将向客户端响应错误信息！");
             log.warn("错误信息：{}", message);
             //此处为什么要加fastjson依赖？因为要传递字符串发送到前端时需要以json形式 此时需要加此依赖转换（反之json也可转为字符串）
-            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_JWT_EXPIRED, message);
+            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERROR_JWT_EXPIRED, message);
             String s = JSON.toJSONString(jsonResult);//将字符串对象放进去放入 转变为Json格式的字符串
             PrintWriter printWriter = response.getWriter();
             printWriter.println(s);//显示一串？？？ java内部的编码未ISO-8859-1 不支持中文编码这样
@@ -80,7 +81,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             log.warn("程序运行过程中出现了MalformedJwtException，将向客户端响应错误信息！");
             log.warn("错误信息:{}",message);
             //此处为什么要加fastjson依赖？因为要传递字符串发送到前端时需要以json形式 此时需要加此依赖转换（反之json也可转为字符串）
-            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_JWT_MALFORMED, message);
+            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERROR_JWT_MALFORMED, message);
             String s = JSON.toJSONString(jsonResult);//将字符串对象放进去放入 转变为Json格式的字符串
             PrintWriter printWriter = response.getWriter();
             printWriter.println(s);//显示一串？？？ java内部的编码未ISO-8859-1 不支持中文编码这样
@@ -92,7 +93,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             log.warn("程序运行过程中出现了SignatureException，将向客户端响应错误信息！");
             log.warn("错误信息：{}", message);
             //此处为什么要加fastjson依赖？因为要传递字符串发送到前端时需要以json形式 此时需要加此依赖转换（反之json也可转为字符串）
-            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_JWT_SIGNATURE,
+            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERROR_JWT_SIGNATURE,
                     message);
             String s = JSON.toJSONString(jsonResult);//将字符串对象放进去放入 转变为Json格式的字符串
             PrintWriter printWriter = response.getWriter();
@@ -105,7 +106,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             log.warn("程序运行过程中出现了Throwable，将向客户端响应错误信息！");
             log.warn("异常：", e);
             //此处为什么要加fastjson依赖？因为要传递字符串发送到前端时需要以json形式 此时需要加此依赖转换（反之json也可转为字符串）
-            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_UNKNOWN, message);
+            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERROR_UNKNOWN, message);
             String s = JSON.toJSONString(jsonResult);//将字符串对象放进去放入 转变为Json格式的字符串
             PrintWriter printWriter = response.getWriter();
             printWriter.println(s);//显示一串？？？ java内部的编码未ISO-8859-1 不支持中文编码这样

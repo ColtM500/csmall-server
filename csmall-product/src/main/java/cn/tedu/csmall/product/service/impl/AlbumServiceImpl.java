@@ -1,6 +1,8 @@
 package cn.tedu.csmall.product.service.impl;
 
 import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.pojo.vo.PageData;
+import cn.tedu.csmall.commons.util.PageInfoToPageDataConvert;
 import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.product.mapper.AlbumMapper;
 import cn.tedu.csmall.product.mapper.PictureMapper;
@@ -14,9 +16,7 @@ import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
 import cn.tedu.csmall.product.pojo.param.AlbumUpdateInfoParam;
 import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
 import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
-import cn.tedu.csmall.product.pojo.vo.PageData;
 import cn.tedu.csmall.product.service.IAlbumService;
-import cn.tedu.csmall.product.util.PageInfoToPageDataConvert;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;

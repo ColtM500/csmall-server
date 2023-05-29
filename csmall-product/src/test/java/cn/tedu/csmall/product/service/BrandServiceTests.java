@@ -1,8 +1,6 @@
 package cn.tedu.csmall.product.service;
 
-import cn.tedu.csmall.product.ex.ServiceException;
-import cn.tedu.csmall.product.pojo.entity.Brand;
-import cn.tedu.csmall.product.pojo.param.AttributeTemplateAddNewParam;
+import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.product.pojo.param.BrandAddNewParam;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

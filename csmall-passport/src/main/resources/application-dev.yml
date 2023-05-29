@@ -6,12 +6,25 @@ spring:
     url: jdbc:mysql://localhost:3306/mall_ams1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  redis:
+    host: localhost
+    port: 6379
+    username: ~
+    password: ~
 
 logging:
   level:
     cn.tedu.csmall: trace
 
+# 当前项目的自定义配置
 csmall:
+  # 数据访问
+  crud:
+    # 默认的查询每页数据量
+    default-query-page-size: 5
+  # JWT配置
   jwt:
-    secret-key: jhdSfkkjKJ3831HdsDkdfSA9KSIjklJD749Fhsa34fMOdsKf08dfjFhkdfs
-    duration-in-minute: 43200
+    # 生成和解析JWT的secretKey，注意：此值应该是不易被预测的，且需要保密
+    secret-key: gfd89uiKa89J043tAFrflkji9432kjfdsajm
+    # JWT的有效时长，以分钟为单位，表现用户成功登录后，登录信息的有效时长
+    duration-in-minute: 14400

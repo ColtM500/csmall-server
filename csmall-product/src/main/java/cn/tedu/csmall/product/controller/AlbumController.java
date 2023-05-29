@@ -1,11 +1,11 @@
 package cn.tedu.csmall.product.controller;
 
+import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.commons.web.JsonResult;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
 import cn.tedu.csmall.product.pojo.param.AlbumUpdateInfoParam;
 import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
 import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
-import cn.tedu.csmall.product.pojo.vo.PageData;
 import cn.tedu.csmall.product.security.LoginPrincipal;
 import cn.tedu.csmall.product.service.IAlbumService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -63,7 +63,7 @@ public class AlbumController {
     }
 
     // http://localhost:8080/album/list
-    @GetMapping("list")
+    @GetMapping("/list")
     @PreAuthorize("hasAuthority('/pms/album/read')")
     @ApiOperation("查询相册列表")
     @ApiOperationSupport(order = 420)

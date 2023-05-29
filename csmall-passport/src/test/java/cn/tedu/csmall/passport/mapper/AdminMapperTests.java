@@ -2,10 +2,6 @@ package cn.tedu.csmall.passport.mapper;
 
 import cn.tedu.csmall.passport.pojo.entity.Admin;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
-import cn.tedu.csmall.passport.pojo.vo.AdminLoginInfoVO;
-import cn.tedu.csmall.passport.pojo.vo.AdminStandardVO;
-import cn.tedu.csmall.passport.pojo.vo.PageData;
-import com.sun.corba.se.spi.ior.ObjectKey;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,10 +3,8 @@ package cn.tedu.csmall.passport.service;
 import cn.tedu.csmall.passport.pojo.param.AdminAddNewParam;
 import cn.tedu.csmall.passport.pojo.param.AdminLoginInfoParam;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
-import cn.tedu.csmall.passport.pojo.vo.PageData;
+import cn.tedu.csmall.commons.pojo.vo.PageData;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Transactional
 public interface IAdminService {
@@ -20,7 +18,13 @@ public interface IAdminService {
 
     void addNew(AdminAddNewParam adminAddNewParam);
 
-    PageData<AdminListItemVO> list(Integer pageNum);
-
+    /**
+     * 查询管理员数据列表
+     *
+     * @param pageNum  页码
+     * @param pageSize 每页记录数
+     * @return 管理员数据列表
+     */
     PageData<AdminListItemVO> list(Integer pageNum, Integer pageSize);
+    PageData<AdminListItemVO> list(Integer pageNum);
 }

@@ -1,6 +1,7 @@
 package cn.tedu.csmall.passport.service.impl;
 
 import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.util.PageInfoToPageDataConvert;
 import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.passport.mapper.AdminMapper;
 import cn.tedu.csmall.passport.mapper.AdminRoleMapper;
@@ -9,12 +10,12 @@ import cn.tedu.csmall.passport.pojo.entity.AdminRole;
 import cn.tedu.csmall.passport.pojo.param.AdminAddNewParam;
 import cn.tedu.csmall.passport.pojo.param.AdminLoginInfoParam;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
-import cn.tedu.csmall.passport.pojo.vo.PageData;
+import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.passport.security.AdminDetails;
 import cn.tedu.csmall.passport.service.IAdminService;
-import cn.tedu.csmall.passport.util.PageInfoToPageDataConvert;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Jwts;
@@ -28,13 +29,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
 @Slf4j
-//@Transactional
+@Transactional
 public class AdminServiceImpl implements IAdminService {
 
     @Value("${csmall.jwt.secret-key}")
@@ -66,6 +68,7 @@ public class AdminServiceImpl implements IAdminService {
                 adminLoginInfoParam.getUsername(),
                 adminLoginInfoParam.getPassword()
         );
+        log.debug("11111111111111111,{}",authentication);
 
         //执行认证 并获取认证结果
         Authentication authenticateResult = authenticationManager.authenticate(authentication);

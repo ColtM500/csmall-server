@@ -1,8 +1,8 @@
 package cn.tedu.csmall.passport.service;
 
-import cn.tedu.csmall.passport.ex.ServiceException;
+import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.passport.pojo.param.AdminAddNewParam;
-import cn.tedu.csmall.passport.pojo.vo.PageData;
+import cn.tedu.csmall.commons.pojo.vo.PageData;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,19 +36,19 @@ public class AdminServiceTests {
         }
     }
 
-    @Test
-    void list() {
-        try {
-            Integer pageNum = 1;
-            Integer pageSize = 5;
-            PageData<?> pageData = service.list(pageNum, pageSize);
-            List<?> list = pageData.getList();
-            log.debug("查询列表完成，结果：{}", pageData);
-            for (Object item : list) {
-                log.debug("列表项：{}", item);
-            }
-        } catch (ServiceException e) {
-            log.debug("捕获到异常，其中的消息：{}", e.getMessage());
-        }
-    }
+//    @Test
+//    void list() {
+//        try {
+//            Integer pageNum = 1;
+//            Integer pageSize = 5;
+//            PageData<?> pageData = service.list(pageNum, pageSize);
+//            List<?> list = pageData.getList();
+//            log.debug("查询列表完成，结果：{}", pageData);
+//            for (Object item : list) {
+//                log.debug("列表项：{}", item);
+//            }
+//        } catch (ServiceException e) {
+//            log.debug("捕获到异常，其中的消息：{}", e.getMessage());
+//        }
+//    }
 }

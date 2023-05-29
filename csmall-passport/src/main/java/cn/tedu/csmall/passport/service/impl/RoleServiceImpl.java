@@ -1,12 +1,8 @@
 package cn.tedu.csmall.passport.service.impl;
 
 import cn.tedu.csmall.passport.mapper.RoleMapper;
-import cn.tedu.csmall.passport.pojo.vo.PageData;
 import cn.tedu.csmall.passport.pojo.vo.RoleListItemVO;
 import cn.tedu.csmall.passport.service.IRoleService;
-import cn.tedu.csmall.passport.util.PageInfoToPageDataConvert;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

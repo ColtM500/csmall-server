@@ -12,5 +12,5 @@ server:
 
 csmall:
   jwt:
-    secret-key: jhdSfkkjKJ3831HdsDkdfSA9KSIjklJD749Fhsa34fMOdsKf08dfjFhkdfs
+    secret-key: gfd89uiKa89J043tAFrflkji9432kjfdsajm
     duration-in-minute: 43200
