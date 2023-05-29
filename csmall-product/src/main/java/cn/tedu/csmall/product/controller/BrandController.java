@@ -1,7 +1,6 @@
 package cn.tedu.csmall.product.controller;
 
-import cn.tedu.csmall.product.ex.ServiceException;
-import cn.tedu.csmall.product.pojo.param.AttributeTemplateAddNewParam;
+import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.product.pojo.param.BrandAddNewParam;
 import cn.tedu.csmall.product.service.IBrandService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;

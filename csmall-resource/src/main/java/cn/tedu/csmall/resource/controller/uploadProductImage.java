@@ -1,10 +1,10 @@
 package cn.tedu.csmall.resource.controller;
 
 
-import cn.tedu.csmall.resource.ex.ServiceException;
+import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.web.JsonResult;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.resource.pojo.vo.UploadResult;
-import cn.tedu.csmall.resource.web.JsonResult;
-import cn.tedu.csmall.resource.web.ServiceCode;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

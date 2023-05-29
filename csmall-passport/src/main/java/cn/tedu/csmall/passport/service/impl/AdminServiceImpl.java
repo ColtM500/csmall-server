@@ -1,6 +1,7 @@
 package cn.tedu.csmall.passport.service.impl;
 
-import cn.tedu.csmall.passport.ex.ServiceException;
+import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.passport.mapper.AdminMapper;
 import cn.tedu.csmall.passport.mapper.AdminRoleMapper;
 import cn.tedu.csmall.passport.pojo.entity.Admin;
@@ -12,7 +13,6 @@ import cn.tedu.csmall.passport.pojo.vo.PageData;
 import cn.tedu.csmall.passport.security.AdminDetails;
 import cn.tedu.csmall.passport.service.IAdminService;
 import cn.tedu.csmall.passport.util.PageInfoToPageDataConvert;
-import cn.tedu.csmall.passport.web.ServiceCode;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
@@ -27,10 +27,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -118,7 +115,7 @@ public class AdminServiceImpl implements IAdminService {
         if (countByUsername>0){
             String message = "添加管理员失败，管理员名称已被占用";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT,message);
         }
 
         //TODO: 检查管理员手机号码是否被占用，如果被占用，则抛出异常
@@ -133,7 +130,7 @@ public class AdminServiceImpl implements IAdminService {
         if (rows != 1) {
             String message = "添加管理员失败，服务器忙，请稍后再试！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+            throw new ServiceException(ServiceCode.ERROR_INSERT, message);
         }
         log.debug("将新的管理员数据写入到数据库中，完成!");
 
@@ -152,7 +149,7 @@ public class AdminServiceImpl implements IAdminService {
         if (rows != adminRoleList.length) {
             String message = "添加管理员失败，服务器忙，请稍后再试！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+            throw new ServiceException(ServiceCode.ERROR_INSERT, message);
         }
         log.debug("将新的管理员与角色关联的数据插入到数据库中，完成!");
     }

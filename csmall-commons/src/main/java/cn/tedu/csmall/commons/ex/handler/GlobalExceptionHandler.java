@@ -1,9 +1,9 @@
-package cn.tedu.csmall.product.ex.handler;
+package cn.tedu.csmall.commons.ex.handler;
 
-import cn.tedu.csmall.product.web.JsonResult;
-import cn.tedu.csmall.product.ex.ServiceException;
-import cn.tedu.csmall.product.web.ServiceCode;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
+import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.web.JsonResult;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
         log.warn("异常信息：{}", e.getMessage());
         // 【解决方案-1】使用1个字符串表示1个错误信息
         String message = e.getFieldError().getDefaultMessage();
-        return JsonResult.fail(ServiceCode.ERR_BAD_REQUEST, message);
+        return JsonResult.fail(ServiceCode.ERROR_BAD_REQUEST, message);
 
         // 【解决方案-2】使用1个字符串表示错误信息
         // StringJoiner stringJoiner = new StringJoiner("，", "请求参数错误，", "！");
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
         //JsonResult jsonResult = new JsonResult();
         //jsonResult.setState(3);
         //jsonResult.setMessage(message);
-        return JsonResult.fail(ServiceCode.ERR_BAD_REQUEST, message);
+        return JsonResult.fail(ServiceCode.ERROR_BAD_REQUEST, message);
     }
 
 //    @ExceptionHandler
@@ -99,7 +99,7 @@ public class GlobalExceptionHandler {
         //JsonResult jsonResult = new JsonResult();
         //jsonResult.setState(99999);
         //jsonResult.setMessage(message);
-        return JsonResult.fail(ServiceCode.ERR_UNKNOWN, message);
+        return JsonResult.fail(ServiceCode.ERROR_UNKNOWN, message);
     }
 
 }

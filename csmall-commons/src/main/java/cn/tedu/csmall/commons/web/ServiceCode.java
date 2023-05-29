@@ -1,9 +1,10 @@
-package cn.tedu.csmall.resource.web;
+package cn.tedu.csmall.commons.web;
 
 /*
     枚举就是私有权限
  */
 public enum ServiceCode {
+
     /**
      * 成功
      */

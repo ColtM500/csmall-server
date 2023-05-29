@@ -1,12 +1,11 @@
 package cn.tedu.csmall.product.service.impl;
 
-import cn.tedu.csmall.product.ex.ServiceException;
+import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.product.mapper.AttributeTemplateMapper;
-import cn.tedu.csmall.product.pojo.entity.Album;
 import cn.tedu.csmall.product.pojo.entity.AttributeTemplate;
 import cn.tedu.csmall.product.pojo.param.AttributeTemplateAddNewParam;
 import cn.tedu.csmall.product.service.IAttributeTemplateService;
-import cn.tedu.csmall.product.web.ServiceCode;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -32,7 +31,7 @@ public class AttributeTemplateService implements IAttributeTemplateService {
         log.debug("根据属性模板名称统计匹配的属性模板数量，结果:{}", countByName);
         if (countByName>0){
             String message = "添加属性模板失败，属性模板名称已被占用";
-            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT,message);
         }
 
         //将属性模板数据写入到数据库中
@@ -45,7 +44,7 @@ public class AttributeTemplateService implements IAttributeTemplateService {
         if (rows!=1){
             String message = "添加属性模板失败，服务器忙，请稍后再试！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+            throw new ServiceException(ServiceCode.ERROR_INSERT, message);
         }
         log.debug("将新的属性模板数据写入到数据库中，完成!");
     }

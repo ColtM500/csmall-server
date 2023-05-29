@@ -19,6 +19,11 @@
 
     <!-- 当前项目使用的依赖项 -->
     <dependencies>
+        <!-- 酷鲨商城-通用模块 -->
+        <dependency>
+            <groupId>cn.tedu</groupId>
+            <artifactId>csmall-commons</artifactId>
+        </dependency>
         <!-- fastjson：实现对象与JSON的相互转换 -->
         <dependency>
             <groupId>com.alibaba</groupId>

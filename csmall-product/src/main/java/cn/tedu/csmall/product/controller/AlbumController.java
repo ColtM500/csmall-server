@@ -1,6 +1,6 @@
 package cn.tedu.csmall.product.controller;
 
-import cn.tedu.csmall.product.ex.ServiceException;
+import cn.tedu.csmall.commons.web.JsonResult;
 import cn.tedu.csmall.product.pojo.param.AlbumAddNewParam;
 import cn.tedu.csmall.product.pojo.param.AlbumUpdateInfoParam;
 import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
@@ -8,7 +8,6 @@ import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
 import cn.tedu.csmall.product.pojo.vo.PageData;
 import cn.tedu.csmall.product.security.LoginPrincipal;
 import cn.tedu.csmall.product.service.IAlbumService;
-import cn.tedu.csmall.product.web.JsonResult;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -17,13 +16,13 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 
 
 @Slf4j
@@ -64,23 +63,25 @@ public class AlbumController {
     }
 
     // http://localhost:8080/album/list
-    @GetMapping("/list")
+    @GetMapping("list")
+    @PreAuthorize("hasAuthority('/pms/album/read')")
     @ApiOperation("查询相册列表")
     @ApiOperationSupport(order = 420)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页码", paramType = "query")
+            @ApiImplicitParam(name = "page", value = "页码", defaultValue = "1", paramType = "query", dataType = "long"),
+            @ApiImplicitParam(name = "queryType", value = "查询类型", example = "all")
     })
-    public JsonResult list(@Range(min = 1, message = "查询相册列表失败，请提供正确的页码值!") Integer page,
-                           @ApiIgnore @AuthenticationPrincipal LoginPrincipal loginPrincipal){
+    public JsonResult<PageData<AlbumListItemVO>> list(@Range(min = 1, message = "请提交有效的页码值！") Integer page,
+                                                      String queryType) {
         log.debug("开始处理【查询相册列表】的请求，页码：{}", page);
-        log.debug("当事人:{}", loginPrincipal);
-        if (page == null || page < 1){
-            page = 1;
+        Integer pageNum = page == null ? 1 : page;
+        PageData<AlbumListItemVO> pageData;
+        if ("all".equals(queryType)) {
+            pageData = albumService.list(pageNum, Integer.MAX_VALUE);
+        } else {
+            pageData = albumService.list(pageNum);
         }
-        PageData<AlbumListItemVO> pageData = albumService.list(page);
-        //ok返回JsonResult对象 由于返回了链式写法 每个set方法都返回了当前对象 可作为当前JsonResult方法的返回值
-        //否则平时set方法的返回值都是void
-        return JsonResult.ok().setData(pageData);
+        return JsonResult.ok(pageData);
     }
 
     // http://localhost:9180/album/getStandardById

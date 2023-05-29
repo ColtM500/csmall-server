@@ -1,6 +1,7 @@
 package cn.tedu.csmall.product.service.impl;
 
-import cn.tedu.csmall.product.ex.ServiceException;
+import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.product.mapper.AlbumMapper;
 import cn.tedu.csmall.product.mapper.PictureMapper;
 import cn.tedu.csmall.product.mapper.SkuMapper;
@@ -16,7 +17,6 @@ import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
 import cn.tedu.csmall.product.pojo.vo.PageData;
 import cn.tedu.csmall.product.service.IAlbumService;
 import cn.tedu.csmall.product.util.PageInfoToPageDataConvert;
-import cn.tedu.csmall.product.web.ServiceCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ public class AlbumServiceImpl implements IAlbumService {
         log.debug("根据相册名称统计匹配的相册数量，结果:{}", countByName);
         if (countByName>0){
             String message = "添加相册失败，相册名称已被占用";
-            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT,message);
         }
 
         //将相册数据写入到数据库中
@@ -66,7 +66,7 @@ public class AlbumServiceImpl implements IAlbumService {
         if (rows!=1){
             String message = "添加相册失败，服务器忙，请稍后再试！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_INSERT, message);
+            throw new ServiceException(ServiceCode.ERROR_INSERT, message);
         }
         log.debug("将新的相册数据写入到数据库中，完成!");
     }
@@ -82,7 +82,7 @@ public class AlbumServiceImpl implements IAlbumService {
         if (countById == 0) {
             String message = "删除相册失败，相册数据不存在！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
         }
 
         // 检查是否有图片关联到了此相册，如果存在，则抛出异常
@@ -93,7 +93,7 @@ public class AlbumServiceImpl implements IAlbumService {
         if (countByAlbumId > 0) {
             String message = "删除相册失败，仍有图片关联到此相册！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
         }
 
         // 检查是否有SPU关联到了此相册，如果存在，则抛出异常
@@ -104,7 +104,7 @@ public class AlbumServiceImpl implements IAlbumService {
         if (countBySpuId > 0) {
             String message = "删除相册失败，仍有SPU关联到此相册！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
         }
 
         // 检查是否有SKU关联到了此相册，如果存在，则抛出异常
@@ -115,14 +115,14 @@ public class AlbumServiceImpl implements IAlbumService {
         if (countBySkuId > 0) {
             String message = "删除相册失败，仍有SKU关联到此相册！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
         }
 
         int rows = albumMapper.deleteById(id);
         if (rows != 1) {
             String message = "删除相册失败，服务器忙，请稍后再试！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_DELETE, message);
+            throw new ServiceException(ServiceCode.ERROR_DELETE, message);
         }
     }
 
@@ -137,7 +137,7 @@ public class AlbumServiceImpl implements IAlbumService {
         if (countById == 0) {
             String message = "修改相册详情失败，相册数据不存在！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
         }
 
         // 检查相册名称是否被其它相册占用，如果被占用，则抛出异常
@@ -152,7 +152,7 @@ public class AlbumServiceImpl implements IAlbumService {
         if (countByName > 0) {
             String message = "修改相册详情失败，相册名称已经被占用！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
         }
 
         // 执行修改
@@ -163,7 +163,7 @@ public class AlbumServiceImpl implements IAlbumService {
         if (rows != 1) {
             String message = "修改相册详情失败，服务器忙，请稍后再试！";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_UPDATE, message);
+            throw new ServiceException(ServiceCode.ERROR_UPDATE, message);
         }
         log.debug("将新的相册数据更新入到数据库，完成！");
     }
@@ -175,7 +175,7 @@ public class AlbumServiceImpl implements IAlbumService {
         if (queryResult == null){
             String message = "查询相册详情失败，相册数据不存在!";
             log.warn(message);
-            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
         }
         return  queryResult;
     }

@@ -1,5 +1,6 @@
-package cn.tedu.csmall.product.web;
+package cn.tedu.csmall.commons.web;
 
+import cn.tedu.csmall.commons.ex.ServiceException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-public class JsonResult implements Serializable {
+public class JsonResult<T> implements Serializable {
 
     /**
      * 操作结果的状态码（状态标识）
@@ -30,14 +31,14 @@ public class JsonResult implements Serializable {
      * 操作成功时响应的数据
      */
     @ApiModelProperty("数据")
-    private Object data;
+    private T data;
 
     /**
      * 生成表示"成功"的响应对象
      *
      * @return 表示"成功"的响应对象
      */
-    public static JsonResult ok() {
+    public static JsonResult<Void> ok() {
         return ok(null);
     }
 
@@ -47,11 +48,21 @@ public class JsonResult implements Serializable {
      * @param data 响应到客户端的数据
      * @return 表示"成功"的响应对象
      */
-    public static JsonResult ok(Object data) {
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setState(ServiceCode.OK.getValue());
-        jsonResult.setData(data);
+    public static <T> JsonResult<T> ok(T data) {
+        JsonResult<T> jsonResult = new JsonResult<>();
+        jsonResult.state = ServiceCode.OK.getValue();
+        jsonResult.data = data;
         return jsonResult;
+    }
+
+    /**
+     * 生成表示"失败"的响应对象
+     *
+     * @param e 业务异常
+     * @return 表示"失败"的响应对象
+     */
+    public static JsonResult<Void> fail(ServiceException e) {
+        return fail(e.getServiceCode(), e.getMessage());
     }
 
     /**
@@ -61,10 +72,10 @@ public class JsonResult implements Serializable {
      * @param message     提示文本
      * @return 表示"失败"的响应对象
      */
-    public static JsonResult fail(ServiceCode serviceCode, String message) {
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setState(serviceCode.getValue());
-        jsonResult.setMessage(message);
+    public static JsonResult<Void> fail(ServiceCode serviceCode, String message) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        jsonResult.state = serviceCode.getValue();
+        jsonResult.message = message;
         return jsonResult;
     }
 

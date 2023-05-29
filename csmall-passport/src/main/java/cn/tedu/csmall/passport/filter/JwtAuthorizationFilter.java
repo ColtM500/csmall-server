@@ -1,16 +1,13 @@
 package cn.tedu.csmall.passport.filter;
 
-import cn.tedu.csmall.passport.security.LoginPrincipal;
-import cn.tedu.csmall.passport.web.JsonResult;
-import cn.tedu.csmall.passport.web.ServiceCode;
+import cn.tedu.csmall.commons.web.JsonResult;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import com.alibaba.fastjson.JSON;
-import com.sun.corba.se.spi.ior.ObjectKey;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -96,7 +92,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             log.warn("程序运行过程中出现了SignatureException，将向客户端响应错误信息！");
             log.warn("错误信息：{}", message);
             //此处为什么要加fastjson依赖？因为要传递字符串发送到前端时需要以json形式 此时需要加此依赖转换（反之json也可转为字符串）
-            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_JWT_SIGNATURE, message);
+            JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_JWT_SIGNATURE,
+                    message);
             String s = JSON.toJSONString(jsonResult);//将字符串对象放进去放入 转变为Json格式的字符串
             PrintWriter printWriter = response.getWriter();
             printWriter.println(s);//显示一串？？？ java内部的编码未ISO-8859-1 不支持中文编码这样

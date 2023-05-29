@@ -1,12 +1,11 @@
 package cn.tedu.csmall.product.config;
 
+import cn.tedu.csmall.commons.web.JsonResult;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.product.filter.JwtAuthorizationFilter;
-import cn.tedu.csmall.product.web.JsonResult;
-import cn.tedu.csmall.product.web.ServiceCode;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -73,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 String message = "您当前未登录，请先登录！";
                 log.warn(message);
 
-                JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_UNAUTHORIZED, message);
+                JsonResult jsonResult = JsonResult.fail(ServiceCode.ERROR_UNAUTHORIZED, message);
                 String jsonString = JSON.toJSONString(jsonResult);
 
                 response.setContentType("application/json; charset=utf-8");

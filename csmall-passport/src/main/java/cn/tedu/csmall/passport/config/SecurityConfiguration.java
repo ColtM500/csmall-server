@@ -1,14 +1,14 @@
 package cn.tedu.csmall.passport.config;
 
+import cn.tedu.csmall.commons.web.JsonResult;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.passport.filter.JwtAuthorizationFilter;
-import cn.tedu.csmall.passport.web.JsonResult;
-import cn.tedu.csmall.passport.web.ServiceCode;
+
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -76,7 +75,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 String message = "您当前未登录，请先登录!";
                 log.warn(message);
                 //此处为什么要加fastjson依赖？因为要传递字符串发送到前端时需要以json形式 此时需要加此依赖转换（反之json也可转为字符串）
-                JsonResult jsonResult = JsonResult.fail(ServiceCode.ERR_UNAUTHORIZED, message);
+                JsonResult jsonResult = JsonResult.fail(ServiceCode.ERROR_UNAUTHORIZED, message);
                 String s = JSON.toJSONString(jsonResult);//将字符串对象放进去放入 转变为Json格式的字符串
                 PrintWriter printWriter = response.getWriter();
                 printWriter.println(s);//显示一串？？？ java内部的编码未ISO-8859-1 不支持中文编码这样

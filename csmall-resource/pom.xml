@@ -16,7 +16,13 @@
     <artifactId>csmall-resource</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <!-- 当前项目使用的依赖项 -->
     <dependencies>
+        <!-- 酷鲨商城-通用模块 -->
+        <dependency>
+            <groupId>cn.tedu</groupId>
+            <artifactId>csmall-commons</artifactId>
+        </dependency>
         <!-- Spring Boot支持Spring MVC的依赖项 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

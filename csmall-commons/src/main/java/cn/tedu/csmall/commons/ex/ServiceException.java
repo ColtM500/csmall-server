@@ -1,7 +1,6 @@
-package cn.tedu.csmall.resource.ex;
+package cn.tedu.csmall.commons.ex;
 
-
-import cn.tedu.csmall.resource.web.ServiceCode;
+import cn.tedu.csmall.commons.web.ServiceCode;
 import lombok.Getter;
 
 public class ServiceException extends RuntimeException {
