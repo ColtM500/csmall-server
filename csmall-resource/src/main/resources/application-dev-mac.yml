@@ -27,4 +27,4 @@ csmall:
       # 允许的文件类型
       types: image/jpeg,image/png
       # 最大尺寸，单位：MB
-      max-size: 5
+      max-size: 5000

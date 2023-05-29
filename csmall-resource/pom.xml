@@ -27,17 +27,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-<!--        &lt;!&ndash; Spring Boot支持Spring Security的依赖项，用于处理认证与授权 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.security</groupId>-->
-<!--                    <artifactId>spring-security-config</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
+        <!-- Spring Boot支持Spring Security的依赖项，用于处理认证与授权 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-config</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- Knife4j Spring Boot：文档 -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
