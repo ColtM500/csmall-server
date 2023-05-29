@@ -22,7 +22,7 @@ public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
 
-    // http://localhost:8080/category/add-new?name=TestName001
+    // http://localhost:9180/category/add-new?name=TestName001
     @PostMapping("/add-new")
     @ApiOperation("添加类别")
     @ApiOperationSupport(order = 100)

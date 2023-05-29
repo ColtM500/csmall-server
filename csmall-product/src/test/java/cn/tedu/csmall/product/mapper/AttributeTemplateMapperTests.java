@@ -30,4 +30,10 @@ public class AttributeTemplateMapperTests {
         System.out.println("插入数据之后，参数：" + attributeTemplate);
     }
 
+    @Test
+    void deleteById() {
+        Long id = 15L;
+        int rows = mapper.deleteById(id);
+        System.out.println(rows);
+    }
 }

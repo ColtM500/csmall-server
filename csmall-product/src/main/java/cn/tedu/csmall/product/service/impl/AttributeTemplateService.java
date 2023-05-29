@@ -5,6 +5,7 @@ import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.product.mapper.AttributeTemplateMapper;
 import cn.tedu.csmall.product.pojo.entity.AttributeTemplate;
 import cn.tedu.csmall.product.pojo.param.AttributeTemplateAddNewParam;
+import cn.tedu.csmall.product.pojo.vo.AttributeTemplateStandardVO;
 import cn.tedu.csmall.product.service.IAttributeTemplateService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -47,5 +48,24 @@ public class AttributeTemplateService implements IAttributeTemplateService {
             throw new ServiceException(ServiceCode.ERROR_INSERT, message);
         }
         log.debug("将新的属性模板数据写入到数据库中，完成!");
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        log.debug("开始处理【根据ID删除属性模板】的业务，参数：{}", id);
+        //检查尝试删除的属性是否存在
+
+    }
+
+    @Override
+    public AttributeTemplateStandardVO getStandardById(Long id) {
+        log.debug("开始处理【根据ID查询属性模板详情】的业务");
+        AttributeTemplateStandardVO attributeTemplate = attributeTemplateMapper.getStandardById(id);
+        if (attributeTemplate==null){
+            String message = "查询属性模板详情失败，尝试访问的数据不存在!";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
+        }
+        return attributeTemplate;
     }
 }

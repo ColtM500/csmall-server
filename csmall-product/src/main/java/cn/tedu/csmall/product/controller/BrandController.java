@@ -23,7 +23,7 @@ public class BrandController {
     @Autowired
     private IBrandService brandService;
 
-    // http://localhost:8080/brand/add-new?name=TestName001
+    // http://localhost:9180/brand/add-new?name=TestName001
     @PostMapping("/add-new")
     @ApiOperation("添加品牌模板")
     @ApiOperationSupport(order = 100)

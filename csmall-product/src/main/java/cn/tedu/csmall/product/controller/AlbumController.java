@@ -35,7 +35,7 @@ public class AlbumController {
     @Autowired
     private IAlbumService albumService;
 
-    // http://localhost:8080/album/add-new?name=TestName001&description=TestDescription001&sort=99
+    // http://localhost:9180/album/add-new?name=TestName001&description=TestDescription001&sort=99
     @PostMapping("/add-new")
     @ApiOperation("添加相册")
     @ApiOperationSupport(order = 100)
@@ -49,7 +49,7 @@ public class AlbumController {
             return JsonResult.ok();
     }
 
-    // http://localhost:8080/album/delete
+    // http://localhost:9180/album/delete
     @PostMapping("/delete")
     @ApiOperation("根据ID删除相册")
     @ApiOperationSupport(order = 200)
@@ -62,7 +62,7 @@ public class AlbumController {
         return JsonResult.ok();
     }
 
-    // http://localhost:8080/album/list
+    // http://localhost:9180/album/list
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('/pms/album/read')")
     @ApiOperation("查询相册列表")
@@ -98,7 +98,7 @@ public class AlbumController {
         return JsonResult.ok(result);//因为要把后端查询得到的东西传到前端去 所以要这个放置这个result对象
     }
 
-    // http://localhost:8080/album/updateInfoById
+    // http://localhost:9180/album/updateInfoById
     @PostMapping("/updateInfoById")
     @ApiOperation("修改相册")
     @ApiOperationSupport(order = 300)
