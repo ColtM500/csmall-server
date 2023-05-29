@@ -3,7 +3,9 @@ package cn.tedu.csmall.passport.mapper;
 import cn.tedu.csmall.passport.pojo.entity.Admin;
 import cn.tedu.csmall.passport.pojo.vo.AdminListItemVO;
 import cn.tedu.csmall.passport.pojo.vo.AdminLoginInfoVO;
+import cn.tedu.csmall.passport.pojo.vo.AdminStandardVO;
 import cn.tedu.csmall.passport.pojo.vo.PageData;
+import com.sun.corba.se.spi.ior.ObjectKey;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,13 @@ public class AdminMapperTests {
         String username = "root";
         Object queryResult = mapper.getLoginInfoByUsername(username);
         System.out.println("根据【username=" + username + "】查询数据完成，结果：" + queryResult);
+    }
+
+    @Test
+    void getStandardById(){
+        Long id = 1L;
+        Object queryResult = mapper.getStandardById(id);
+        log.debug("根据【ID=,{},】查询数据完成，结果：{} "+id,queryResult );
     }
 
 }

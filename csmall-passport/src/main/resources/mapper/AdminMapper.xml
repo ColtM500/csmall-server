@@ -74,4 +74,10 @@
         </collection>
     </resultMap>
 
+<!--    AdminStandardVO getStandardById(Long id);-->
+    <select id="getStandardById" resultType="cn.tedu.csmall.passport.pojo.vo.AdminStandardVO">
+        select id, username, password
+        from ams_admin
+        where id=#{id}
+    </select>
 </mapper>
