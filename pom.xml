@@ -27,6 +27,7 @@
     <modules>
         <module>csmall-product</module>
         <module>csmall-passport</module>
+        <module>csmall-resource</module>
     </modules>
 
     <!-- 属性配置 -->
