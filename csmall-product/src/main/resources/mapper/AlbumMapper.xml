@@ -4,6 +4,8 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.AlbumMapper">
 
+    <cache/>
+
 <!--    List<AlbumListItemVO> list();-->
 <select id="list" resultType="cn.tedu.csmall.product.pojo.vo.AlbumListItemVO">
     select  id, name, description, sort
