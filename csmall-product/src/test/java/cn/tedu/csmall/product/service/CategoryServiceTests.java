@@ -15,8 +15,8 @@ public class CategoryServiceTests {
     @Test
     void addNew(){
         CategoryAddNewParam categoryAddNewParam = new CategoryAddNewParam();
-        categoryAddNewParam.setName("测试数据-00003");
-        categoryAddNewParam.setDepth(1);
+        categoryAddNewParam.setName("测试数据-00004");
+        categoryAddNewParam.setParentId(0L);
         categoryAddNewParam.setKeywords("www,ww,eee");
         categoryAddNewParam.setSort(99);
 

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.csmall.product.mapper.CategoryMapper">
+
+    <!--    int insertBatch(List<Category> categories);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_category (
+        name, parent_id, depth, keywords, sort,
+        icon, enable, is_parent, is_display
+        ) VALUES
+        <foreach collection="list" item="category" separator=",">
+            (#{category.name}, #{category.parentId}, #{category.depth}, #{category.keywords}, #{category.sort},
+            #{category.icon}, #{category.enable}, #{category.isParent}, #{category.isDisplay})
+        </foreach>
+    </insert>
+
+    <!--    CategoryStandardVO getStandardById(Long id);-->
+    <select id="getStandardById" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+        pms_category
+        WHERE id=#{id}
+    </select>
+
+    <sql id="StandardQueryFields">
+        <if test="true">
+            id, name, parent_id, depth, keywords,
+            sort, icon, enable, is_parent, is_display
+        </if>
+    </sql>
+
+    <resultMap id="StandardResultMap" type="cn.tedu.csmall.product.pojo.vo.CategoryStandardVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="depth" property="depth"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+        <result column="icon" property="icon"/>
+        <result column="enable" property="enable"/>
+        <result column="is_parent" property="isParent"/>
+        <result column="is_display" property="isDisplay"/>
+    </resultMap>
+
+    <!--    List<CategoryListItemVO> list();-->
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        pms_category
+        ORDER BY
+        sort DESC, id DESC
+    </select>
+
+    <!--    List<CategoryListItemVO> listByParentId(Long parentId);-->
+    <select id="listByParentId" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        pms_category
+        WHERE
+        parent_id=#{parentId}
+        ORDER BY
+        sort DESC, id DESC
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id, name, parent_id, depth, keywords,
+            sort, icon, enable, is_parent, is_display
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.CategoryListItemVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="depth" property="depth"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+        <result column="icon" property="icon"/>
+        <result column="enable" property="enable"/>
+        <result column="is_parent" property="isParent"/>
+        <result column="is_display" property="isDisplay"/>
+    </resultMap>
+
+<!--    int countByNameAndParentId(String name, Long parentId);-->
+    <select id="countByNameAndParentId" resultType="int">
+        select count(*) from pms_category where name=#{name} and parent_id=#{parentId}
+    </select>
+
+<!--    int update(Category category);-->
+    <update id="update">
+        UPDATE
+        pms_category
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="parentId != null">
+                parent_id=#{parentId},
+            </if>
+            <if test="depth != null">
+                depth=#{depth},
+            </if>
+            <if test="keywords != null">
+                keywords=#{keywords},
+            </if>
+            <if test="sort != null">
+                sort=#{sort},
+            </if>
+            <if test="icon != null">
+                icon=#{icon},
+            </if>
+            <if test="enable != null">
+                enable=#{enable},
+            </if>
+            <if test="isParent != null">
+                is_parent=#{isParent},
+            </if>
+            <if test="isDisplay != null">
+                is_display=#{isDisplay},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+</mapper>

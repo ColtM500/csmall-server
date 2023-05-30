@@ -7,6 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface ICategoryService {
     void addNew(CategoryAddNewParam categoryAddNewParam);
+
+    void delete(Long id);
+
+
 }
 
 
