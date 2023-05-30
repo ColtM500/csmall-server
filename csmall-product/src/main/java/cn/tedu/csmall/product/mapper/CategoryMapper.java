@@ -22,4 +22,6 @@ public interface CategoryMapper extends BaseMapper<Category> {
     int countByNameAndParentId(String name, Long parentId);
 
     int update(Category category);
+
+    int countByParentId(Long parentId);
 }

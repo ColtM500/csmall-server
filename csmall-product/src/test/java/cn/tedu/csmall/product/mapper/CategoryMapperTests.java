@@ -97,4 +97,12 @@ public class CategoryMapperTests {
             log.debug("列表项:{}", item);
         }
     }
+
+    @Test
+    void countByParentId(){
+        Long parentId = 78L;
+        int count = mapper.countByParentId(parentId);
+        log.debug("根据父类的id{}查询到的数量有{}",parentId, count);
+    }
+
 }

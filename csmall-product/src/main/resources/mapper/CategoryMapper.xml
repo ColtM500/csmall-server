@@ -128,4 +128,9 @@
         </set>
         WHERE id=#{id}
     </update>
+
+<!--    int countByParentId(Long parentId);-->
+    <select id="countByParentId" resultType="int">
+        select count(*) from pms_category where parent_id=#{parentId}
+    </select>
 </mapper>

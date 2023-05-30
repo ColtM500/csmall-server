@@ -3,11 +3,11 @@ package cn.tedu.csmall.product.service.impl;
 import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.product.mapper.CategoryMapper;
+import cn.tedu.csmall.product.mapper.SpuMapper;
 import cn.tedu.csmall.product.pojo.entity.Category;
 import cn.tedu.csmall.product.pojo.param.CategoryAddNewParam;
 import cn.tedu.csmall.product.pojo.vo.CategoryStandardVO;
 import cn.tedu.csmall.product.service.ICategoryService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,17 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Service
-public class CategoryAddNewParamService implements ICategoryService {
+public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private SpuMapper spuMapper;
+
+    public CategoryServiceImpl (){
+        log.debug("正在创建Category业务层对象……");
+    }
 
     @Override
     public void addNew(CategoryAddNewParam categoryAddNewParam) {
@@ -82,6 +89,56 @@ public class CategoryAddNewParamService implements ICategoryService {
 
     @Override
     public void delete(Long id) {
+        log.debug("开始处理【根据ID删除类别】的业务，参数：{}", id);
+        // 调用Mapper对象的getStandardById()执行查询
+        CategoryStandardVO currentCategory = categoryMapper.getStandardById(id);
+        // 判断查询结果是否为null，如果是，则抛出异常
+        if (currentCategory == null) {
+            // 是：数据不存在，抛出异常
+            String message = "删除类别失败，尝试删除的类别数据不存在！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
+        }
 
+        // 判断查询结果中的isParent是否为1，如果是，则抛出异常
+        if (currentCategory.getIsParent() == 1) {
+            String message = "删除类别失败，该类别仍包含子级类别！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+        }
+
+        // 检查此类别是否关联了SPU
+        {
+            int count = spuMapper.countByCategoryId(id);
+            if (count > 0) {
+                String message = "删除品牌失败！当前品牌仍关联了商品！";
+                log.warn(message);
+                throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+            }
+        }
+
+        // 调用Mapper对象的deleteById()方法执行删除
+        int rows = categoryMapper.deleteById(id);
+        if (rows != 1) {
+            String message = "删除类别失败，服务器忙，请稍后再尝试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_DELETE, message);
+        }
+
+        // 调用Mapper对象的countByParentId方法，根据以上查询结果中的parentId，执行统计
+        Long parentId = currentCategory.getParentId();
+        int count = categoryMapper.countByParentId(parentId);
+        // 判断统计结果为0，则将父级类别的isParent更新为0
+        if (count == 0) {
+            Category parentCategory = new Category();
+            parentCategory.setId(parentId);
+            parentCategory.setIsParent(0);
+            rows = categoryMapper.update(parentCategory);
+            if (rows != 1) {
+                String message = "删除类别失败，服务器忙，请稍后再尝试！";
+                log.warn(message);
+                throw new ServiceException(ServiceCode.ERROR_UPDATE, message);
+            }
+        }
     }
 }

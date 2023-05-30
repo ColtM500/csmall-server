@@ -6,4 +6,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpuMapper extends BaseMapper<Spu> {
+
+    /**
+     * 根据类别id统计SPU的数量
+     * @param categoryId
+     * @return
+     */
+    int countByCategoryId(Long categoryId);
 }

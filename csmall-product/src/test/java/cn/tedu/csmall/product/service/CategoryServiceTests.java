@@ -13,7 +13,7 @@ public class CategoryServiceTests {
     ICategoryService service;
 
     @Test
-    void addNew(){
+    void addNew() {
         CategoryAddNewParam categoryAddNewParam = new CategoryAddNewParam();
         categoryAddNewParam.setName("测试数据-00004");
         categoryAddNewParam.setParentId(0L);
@@ -29,5 +29,16 @@ public class CategoryServiceTests {
             System.out.println("添加失败！出现了某种异常！");
             throwable.printStackTrace();
         }
+    }
+
+    @Test
+    void delete() {
+        Long id = 92L;
+        try {
+            service.delete(id);
+        } catch (ServiceException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }

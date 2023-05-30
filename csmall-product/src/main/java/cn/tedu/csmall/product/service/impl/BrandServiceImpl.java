@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Service
-public class BrandAddNewParamService implements IBrandService {
+public class BrandServiceImpl implements IBrandService {
 
     @Autowired
     private BrandMapper brandMapper;
