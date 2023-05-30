@@ -2,6 +2,8 @@ package cn.tedu.csmall.product.service.impl;
 
 import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.commons.web.ServiceCode;
+import cn.tedu.csmall.product.mapper.BrandCategoryMapper;
+import cn.tedu.csmall.product.mapper.CategoryAttributeTemplateMapper;
 import cn.tedu.csmall.product.mapper.CategoryMapper;
 import cn.tedu.csmall.product.mapper.SpuMapper;
 import cn.tedu.csmall.product.pojo.entity.Category;
@@ -24,6 +26,12 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
     private SpuMapper spuMapper;
+
+    @Autowired
+    private CategoryAttributeTemplateMapper categoryAttributeTemplateMapper;
+
+    @Autowired
+    private BrandCategoryMapper brandCategoryMapper;
 
     public CategoryServiceImpl (){
         log.debug("正在创建Category业务层对象……");
@@ -116,6 +124,27 @@ public class CategoryServiceImpl implements ICategoryService {
                 throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
             }
         }
+
+        //检查此类别是否关联了属性
+        {
+            int count = categoryAttributeTemplateMapper.countByCategoryId(id);
+            if (count>0){
+                String message = "删除类别失败！当前类别仍关联了属性模板！";
+                log.warn(message);
+                throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+            }
+        }
+
+        //检查此类别是否关联了品牌
+        {
+            int count = brandCategoryMapper.countByCategoryId(id);
+            if (count>0){
+                String message = "删除类别失败！当前类别仍关联了品牌模板!";
+                log.warn(message);
+                throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+            }
+        }
+
 
         // 调用Mapper对象的deleteById()方法执行删除
         int rows = categoryMapper.deleteById(id);

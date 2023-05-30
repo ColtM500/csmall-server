@@ -39,6 +39,5 @@ public class CategoryServiceTests {
         } catch (ServiceException e) {
             System.out.println(e.getMessage());
         }
-
     }
 }
