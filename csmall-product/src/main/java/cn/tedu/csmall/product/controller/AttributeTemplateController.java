@@ -45,7 +45,8 @@ public class AttributeTemplateController {
 
     // http://localhost:9180/attribute-template/8
     @GetMapping("/{id:[0-9]+}")
-    @PreAuthorize("hasAuthrity('/pms/product/read')")
+//    @PreAuthorize("hasAuthrity('/pms/product/read')")
+    @PreAuthorize("hasAuthority('/pms/product/read')")
     @ApiOperation("根据ID查询属性模板详情")
     @ApiOperationSupport(order = 400)
     @ApiImplicitParams({
@@ -63,7 +64,7 @@ public class AttributeTemplateController {
 
     // http://localhost:9180/attribute-template/8/delete
     @GetMapping("/{id:[0-9]+}/delete")
-    @PreAuthorize("hasAuthority('pms/product/delete')")
+    @PreAuthorize("hasAuthority('/pms/product/delete')")
     @ApiOperation("根据ID删除属性模板")
     @ApiOperationSupport(order = 200)
     @ApiImplicitParams({
