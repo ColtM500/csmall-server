@@ -62,4 +62,28 @@ public class CategoryServiceTests {
             log.debug("捕获到异常，其中的消息：{}", e.getMessage());
         }
     }
+
+    @Test
+    void setEnable() {
+        Long id = 1L;
+
+        try {
+            service.setEnable(id);
+            log.debug("启用类别成功！");
+        } catch (ServiceException e) {
+            log.debug("捕获到异常，其中的消息：{}", e.getMessage());
+        }
+    }
+
+    @Test
+    void setDisable() {
+        Long id = 1L;
+
+        try {
+            service.setDisable(id);
+            log.debug("禁用类别成功！");
+        } catch (ServiceException e) {
+            log.debug("捕获到异常，其中的消息：{}", e.getMessage());
+        }
+    }
 }

@@ -75,7 +75,7 @@ public class CategoryMapperTests {
     void update(){
         Category category = new Category();
         category.setId(90L);
-        category.setName("ww");
+        category.setName("sbbbbb");
 
         int rows = mapper.update(category);
         System.out.println("更新完成，受影响的行数：" + rows);

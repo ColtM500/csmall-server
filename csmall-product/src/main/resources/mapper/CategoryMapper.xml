@@ -97,9 +97,8 @@
     </select>
 
     <!--    int update(Category category);-->
-    <update id="update">
-        UPDATE
-        pms_category
+    <update id="update" >
+        UPDATE pms_category
         <set>
             <if test="name != null">
                 name=#{name},

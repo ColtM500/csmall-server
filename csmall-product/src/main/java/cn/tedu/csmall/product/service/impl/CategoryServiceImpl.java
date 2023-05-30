@@ -179,9 +179,46 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    public void setEnable(Long id) {
+        updateEnableById(id, 1);
+    }
+
+    @Override
+    public void setDisable(Long id) {
+        updateEnableById(id, 0);
+    }
+
+    private void updateEnableById(Long id, Integer enable){
+        //检查类别是否存在
+        CategoryStandardVO categoryStandard = categoryMapper.getStandardById(id);
+        if (categoryStandard==null){
+            String message = Enable_Text[enable]+"类别失败，类别数据不存在!";
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
+        }
+
+        //检查当前类别的启用状态 相同则抛出异常
+        if (categoryStandard.getEnable()==enable){
+            String message = Enable_Text[enable]+"类别失败，此类别已处于"+Enable_Text[enable]+"状态!";
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+        }
+
+        //调用mapper 更新mapper状态
+        Category category = new Category();
+        category.setId(category.getId());
+        category.setEnable(category.getEnable());
+        category.setGmtCreate(LocalDateTime.now());
+        category.setGmtModified(LocalDateTime.now());
+        int rows = categoryMapper.updateById(category);
+        if (rows!=1){
+            String message = Enable_Text[enable]+"类被失败，服务器繁忙，请稍后再试!";
+            throw new ServiceException(ServiceCode.ERROR_UPDATE, message);
+        }
+
+    }
+
+    @Override
     public PageData<CategoryListItemVO> listByParentId(Long parentId, Integer pageNum) {
         log.debug("开始处理【根据父级类别查询子级类别列表】的业务，父级类别：{}, 页码：{}", parentId, pageNum);
-        Integer pageSize = 5;
         return listByParentId(parentId, pageNum, 5);
     }
 
