@@ -88,12 +88,15 @@
         <result column="is_display" property="isDisplay"/>
     </resultMap>
 
-<!--    int countByNameAndParentId(String name, Long parentId);-->
+    <!--    int countByNameAndParentId(String name, Long parentId);-->
     <select id="countByNameAndParentId" resultType="int">
-        select count(*) from pms_category where name=#{name} and parent_id=#{parentId}
+        select count(*)
+        from pms_category
+        where name = #{name}
+          and parent_id = #{parentId}
     </select>
 
-<!--    int update(Category category);-->
+    <!--    int update(Category category);-->
     <update id="update">
         UPDATE
         pms_category
@@ -129,8 +132,11 @@
         WHERE id=#{id}
     </update>
 
-<!--    int countByParentId(Long parentId);-->
+    <!--    int countByParentId(Long parentId);-->
     <select id="countByParentId" resultType="int">
-        select count(*) from pms_category where parent_id=#{parentId}
+        select count(*)
+        from pms_category
+        where parent_id = #{parentId}
+        order by sort DESC, id DESC
     </select>
 </mapper>

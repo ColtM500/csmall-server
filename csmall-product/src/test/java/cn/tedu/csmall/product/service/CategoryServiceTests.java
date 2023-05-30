@@ -1,11 +1,16 @@
 package cn.tedu.csmall.product.service;
 
 import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.product.pojo.param.CategoryAddNewParam;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
+@Slf4j
 @SpringBootTest
 public class CategoryServiceTests {
 
@@ -38,6 +43,23 @@ public class CategoryServiceTests {
             service.delete(id);
         } catch (ServiceException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    void listByParentId() {
+        try {
+            Long parentId = 0L;
+            Integer pageNum = 1;
+            Integer pageSize = 5;
+            PageData<?> pageData = service.listByParentId(parentId, pageNum, pageSize);
+            List<?> list = pageData.getList();
+            log.debug("查询列表完成，结果：{}", pageData);
+            for (Object item : list) {
+                log.debug("列表项：{}", item);
+            }
+        } catch (ServiceException e) {
+            log.debug("捕获到异常，其中的消息：{}", e.getMessage());
         }
     }
 }

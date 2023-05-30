@@ -1,5 +1,6 @@
 package cn.tedu.csmall.product.mapper;
 
+import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.product.pojo.entity.Category;
 import cn.tedu.csmall.product.pojo.vo.CategoryListItemVO;
 import cn.tedu.csmall.product.pojo.vo.CategoryStandardVO;
@@ -24,4 +25,8 @@ public interface CategoryMapper extends BaseMapper<Category> {
     int update(Category category);
 
     int countByParentId(Long parentId);
+
+//    PageData<CategoryListItemVO> list(Integer pageNum, Integer pageSize);
+//
+//    PageData<CategoryListItemVO> listByParentId(Long parentId, Integer pageNum, Integer pageSize);
 }

@@ -1,5 +1,6 @@
 package cn.tedu.csmall.product.mapper;
 
+import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.product.pojo.entity.Category;
 import cn.tedu.csmall.product.pojo.vo.CategoryListItemVO;
 import lombok.extern.slf4j.Slf4j;
@@ -100,9 +101,33 @@ public class CategoryMapperTests {
 
     @Test
     void countByParentId(){
-        Long parentId = 78L;
+        Long parentId = 4L;
         int count = mapper.countByParentId(parentId);
         log.debug("根据父类的id{}查询到的数量有{}",parentId, count);
     }
 
+//    @Test
+//    void PageList() {
+//        Integer pageNum = 1;
+//        Integer pageSize = 5;
+//        PageData<?> pageData = mapper.list(pageNum, pageSize);
+//        List<?> list = pageData.getList();
+//        log.debug("查询列表完成，结果：{}", pageData);
+//        for (Object item : list) {
+//            log.debug("列表项：{}", item);
+//        }
+//    }
+//
+//    @Test
+//    void PageListByParentId() {
+//        Long parentId = 0L;
+//        Integer pageNum = 1;
+//        Integer pageSize = 5;
+//        PageData<?> pageData = mapper.listByParentId(parentId, pageNum, pageSize);
+//        List<?> list = pageData.getList();
+//        log.debug("查询列表完成，结果：{}", pageData);
+//        for (Object item : list) {
+//            log.debug("列表项：{}", item);
+//        }
+//    }
 }

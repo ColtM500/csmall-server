@@ -1,6 +1,8 @@
 package cn.tedu.csmall.product.service.impl;
 
 import cn.tedu.csmall.commons.ex.ServiceException;
+import cn.tedu.csmall.commons.pojo.vo.PageData;
+import cn.tedu.csmall.commons.util.PageInfoToPageDataConvert;
 import cn.tedu.csmall.commons.web.ServiceCode;
 import cn.tedu.csmall.product.mapper.BrandCategoryMapper;
 import cn.tedu.csmall.product.mapper.CategoryAttributeTemplateMapper;
@@ -8,14 +10,19 @@ import cn.tedu.csmall.product.mapper.CategoryMapper;
 import cn.tedu.csmall.product.mapper.SpuMapper;
 import cn.tedu.csmall.product.pojo.entity.Category;
 import cn.tedu.csmall.product.pojo.param.CategoryAddNewParam;
+import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
+import cn.tedu.csmall.product.pojo.vo.CategoryListItemVO;
 import cn.tedu.csmall.product.pojo.vo.CategoryStandardVO;
 import cn.tedu.csmall.product.service.ICategoryService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -169,5 +176,27 @@ public class CategoryServiceImpl implements ICategoryService {
                 throw new ServiceException(ServiceCode.ERROR_UPDATE, message);
             }
         }
+    }
+
+    @Override
+    public PageData<CategoryListItemVO> listByParentId(Long parentId, Integer pageNum) {
+        log.debug("开始处理【根据父级类别查询子级类别列表】的业务，父级类别：{}, 页码：{}", parentId, pageNum);
+        Integer pageSize = 5;
+        return listByParentId(parentId, pageNum, 5);
+    }
+
+    @Override
+    public PageData<CategoryListItemVO> listByParentId(Long parentId, Integer pageNum, Integer pageSize) {
+        log.debug("开始处理【根据父级类别查询子级类别列表】的业务，父级类别：{}, 页码：{}，每页记录数：{}", parentId, pageNum, pageSize);
+        //开始分页
+        PageHelper.startPage(pageNum, pageSize);
+        //调用mapper进行数据库处理的分页查询
+        List<CategoryListItemVO> list = categoryMapper.listByParentId(parentId);
+        //将所查信息用pageInfo装起来
+        PageInfo<CategoryListItemVO> pageInfo = new PageInfo<>(list);
+        //用Convert的api将pageInfo转程pageData
+        PageData<CategoryListItemVO> pageData = PageInfoToPageDataConvert.convert(pageInfo);
+        log.debug("查询完成，即将返回：{}", pageData);
+        return pageData;
     }
 }
