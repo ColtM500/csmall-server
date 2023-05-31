@@ -96,6 +96,12 @@
           and parent_id = #{parentId}
     </select>
 
+<!--    int countByNameAndNotId(@Param("id") Long id,@Param("name") String name);-->
+    <select id="countByNameAndNotId" resultType="int">
+        select count(*)
+        from pms_category
+        where name=#{name} and id!=#{id}
+    </select>
     <!--    int update(Category category);-->
     <update id="update" >
         UPDATE pms_category

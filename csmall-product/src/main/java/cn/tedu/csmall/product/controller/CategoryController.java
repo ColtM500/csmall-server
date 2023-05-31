@@ -92,7 +92,7 @@ public class CategoryController {
     })
     public JsonResult<Void> setDisplay(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
         log.debug("开始处理【显示】的请求，参数：{}", id);
-        categoryService.setEnable(id);
+        categoryService.setDisplay(id);
         return JsonResult.ok();
     }
 
@@ -106,7 +106,7 @@ public class CategoryController {
     })
     public JsonResult<Void> setHidden(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
         log.debug("开始处理【隐藏】的请求，参数：{}", id);
-        categoryService.setDisable(id);
+        categoryService.setHidden(id);
         return JsonResult.ok();
     }
 
@@ -137,5 +137,7 @@ public class CategoryController {
         PageData<CategoryListItemVO> pageData = categoryService.listByParentId(parentId, pageNum);
         return JsonResult.ok(pageData);
     }
+
+
 
 }

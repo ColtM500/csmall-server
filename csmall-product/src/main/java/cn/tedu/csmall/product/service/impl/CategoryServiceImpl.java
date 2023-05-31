@@ -10,6 +10,7 @@ import cn.tedu.csmall.product.mapper.CategoryMapper;
 import cn.tedu.csmall.product.mapper.SpuMapper;
 import cn.tedu.csmall.product.pojo.entity.Category;
 import cn.tedu.csmall.product.pojo.param.CategoryAddNewParam;
+import cn.tedu.csmall.product.pojo.param.CategoryUpdateInfoParam;
 import cn.tedu.csmall.product.pojo.vo.AlbumListItemVO;
 import cn.tedu.csmall.product.pojo.vo.CategoryListItemVO;
 import cn.tedu.csmall.product.pojo.vo.CategoryStandardVO;
@@ -197,6 +198,46 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public void setHidden(Long id) {
         updateDisplayById(id, 0);
+    }
+
+    @Override
+    public CategoryStandardVO getStandardById(Long id) {
+        log.debug("开始处理【根据ID查询类别详情】的业务，参数:{}", id);
+        CategoryStandardVO queryResult = categoryMapper.getStandardById(id);
+        if (queryResult==null){
+            String message = "查询类别详情失败，类别数据不存在！";
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
+        }
+        return queryResult;
+    }
+
+    @Override
+    public void updateStandardById(Long id, CategoryUpdateInfoParam categoryUpdateInfoParam) {
+        log.debug("开始处理【修改类别详情】的业务，ID：{}，新数据：{}",id,categoryUpdateInfoParam);
+        //检查查询结果是否为空
+        CategoryStandardVO queryResult = categoryMapper.getStandardById(id);
+        if (queryResult==null){
+            String message = "修改类别失败，类别信息不存在!";
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
+        }
+        //调用countByNameAndNotId(统计)
+        int count = categoryMapper.countByNameAndNotId(id, categoryUpdateInfoParam.getName());
+        if (count>0){
+            String message = "修改类别详情失败，类别名称已被占用!";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+        }
+
+        //调用update执行修改
+        Category category = new Category();
+        BeanUtils.copyProperties(categoryUpdateInfoParam, category);
+        category.setId(id);
+        int rows = categoryMapper.updateById(category);
+        if (rows!=1){
+            String message = "修改类别详情失败，服务器忙，请稍后再尝试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_UPDATE, message);
+        }
     }
 
     @Override

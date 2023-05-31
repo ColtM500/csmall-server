@@ -106,6 +106,12 @@ public class CategoryMapperTests {
         log.debug("根据父类的id{}查询到的数量有{}",parentId, count);
     }
 
+    @Test
+    void xxx(){
+        int count = mapper.countByNameAndNotId(1L, "水果");
+        log.debug("根据id查询信息完成，结果:{}", count);
+    }
+
 //    @Test
 //    void PageList() {
 //        Integer pageNum = 1;
