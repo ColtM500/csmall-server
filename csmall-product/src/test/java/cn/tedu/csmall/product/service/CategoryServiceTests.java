@@ -86,4 +86,13 @@ public class CategoryServiceTests {
             log.debug("捕获到异常，其中的消息：{}", e.getMessage());
         }
     }
+
+    @Test
+    void listTree() {
+        List<?> list = service.listTree();
+        log.debug("查询列表完成");
+        for (Object item : list) {
+            log.debug("列表项：{}", item);
+        }
+    }
 }

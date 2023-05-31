@@ -4,6 +4,7 @@ import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.product.pojo.param.BrandAddNewParam;
 import cn.tedu.csmall.product.pojo.param.CategoryAddNewParam;
 import cn.tedu.csmall.product.pojo.vo.CategoryListItemVO;
+import cn.tedu.csmall.product.pojo.vo.CategoryTreeItemVO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface ICategoryService {
 
 //    void setHidden(Long id);//固定将Hidden设为0
 
-//    List<CategoryListItemVO> list();
+    List<CategoryTreeItemVO> listTree();
 
     PageData<CategoryListItemVO> listByParentId(Long parentId, Integer pageNum);
 
