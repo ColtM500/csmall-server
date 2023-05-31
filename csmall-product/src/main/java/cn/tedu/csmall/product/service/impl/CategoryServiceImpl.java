@@ -190,6 +190,16 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    public void setDisplay(Long id) {
+        updateDisplayById(id, 1);
+    }
+
+    @Override
+    public void setHidden(Long id) {
+        updateDisplayById(id, 0);
+    }
+
+    @Override
     public List<CategoryTreeItemVO> listTree() {
         log.debug("开始处理【获取类别树】的业务，参数:无");
         //创建树的集合
@@ -282,6 +292,29 @@ public class CategoryServiceImpl implements ICategoryService {
             throw new ServiceException(ServiceCode.ERROR_UPDATE, message);
         }
 
+    }
+
+    private void updateDisplayById(Long id, Integer isDisplay){
+        //检查类别是否存在
+        CategoryStandardVO currentCategory = categoryMapper.getStandardById(id);
+        if (currentCategory==null){
+            String message = Display_Text[isDisplay] + "类别失败！类别数据不存在!";
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
+        }
+
+        //检查启用状态
+        if (currentCategory.getIsDisplay()==isDisplay){
+            String message = Display_Text[isDisplay]+"数据失败！该类别已处于"+Display_Text[isDisplay]+"状态!";
+            throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+        }
+
+        //修改启用状态
+        Category category = new Category();
+        int rows = categoryMapper.updateById(category);
+        if (rows!=1){
+            String message = Display_Text[isDisplay]+"类别失败！服务器繁忙，请稍后再试!";
+            throw new ServiceException(ServiceCode.ERROR_UNKNOWN, message);
+        }
     }
 
     @Override

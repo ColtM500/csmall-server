@@ -24,9 +24,9 @@ public interface ICategoryService {
 
     void setDisable(Long id);//固定将disable设为0
 
-//    void setDisplay(Long id);//固定将display设为1
+    void setDisplay(Long id);//固定将display设为1
 
-//    void setHidden(Long id);//固定将Hidden设为0
+    void setHidden(Long id);//固定将Hidden设为0
 
     List<CategoryTreeItemVO> listTree();
 

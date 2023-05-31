@@ -82,6 +82,34 @@ public class CategoryController {
         return JsonResult.ok();
     }
 
+    // http://localhost:9180/categories/1/display
+    @PostMapping("/{id:[0-9]+}/display")
+    @PreAuthorize("hasAuthority('/pms/category/update')")
+    @ApiOperation("显示")
+    @ApiOperationSupport(order = 312)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "类别ID", required = true, dataType = "long")
+    })
+    public JsonResult<Void> setDisplay(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
+        log.debug("开始处理【显示】的请求，参数：{}", id);
+        categoryService.setEnable(id);
+        return JsonResult.ok();
+    }
+
+    // http://localhost:9180/categories/1/hidden
+    @PostMapping("/{id:[0-9]+}/hidden")
+    @PreAuthorize("hasAuthority('/pms/category/update')")
+    @ApiOperation("隐藏")
+    @ApiOperationSupport(order = 313)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "类别ID", required = true, dataType = "long")
+    })
+    public JsonResult<Void> setHidden(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
+        log.debug("开始处理【隐藏】的请求，参数：{}", id);
+        categoryService.setDisable(id);
+        return JsonResult.ok();
+    }
+
     // http://localhost:9180/categories/tree
     @GetMapping("/tree")
     @PreAuthorize("hasAuthority('/pms/category/read')")
