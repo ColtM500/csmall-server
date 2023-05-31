@@ -28,4 +28,36 @@
         <result column="keywords" property="keywords"/>
         <result column="sort" property="sort"/>
     </resultMap>
+
+    <!--    int countByNameAndNotId(@Param("id") Long id,@Param("name") String name);-->
+    <select id="countByNameAndNotId" resultType="int">
+        select count(*)
+        from pms_attribute_template
+        where name=#{name} and id!=#{id}
+    </select>
+
+<!--    List<AttributeTemplateListItemVO> list();-->
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        pms_attribute_template
+        ORDER BY
+        sort DESC, id DESC
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id, name, pinyin, keywords, sort
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.AttributeTemplateListItemVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pinyin" property="pinyin"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
 </mapper>

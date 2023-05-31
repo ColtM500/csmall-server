@@ -96,4 +96,11 @@
         from pms_attribute
         where name=#{name} and template_id=#{templateId}
     </select>
+
+<!--    int countByNameAndTemplateAndNotId(String name, Long templateId, Long id);-->
+    <select id="countByNameAndTemplateAndNotId" resultType="int">
+        SELECT count(*)
+        from pms_attribute
+        where name=#{name} and template_id=#{templateId} and id!=#{id}
+    </select>
 </mapper>

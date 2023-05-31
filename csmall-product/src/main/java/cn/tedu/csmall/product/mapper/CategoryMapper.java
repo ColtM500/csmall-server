@@ -29,7 +29,4 @@ public interface CategoryMapper extends BaseMapper<Category> {
 
     int countByNameAndNotId(@Param("id") Long id,@Param("name") String name);
 
-//    PageData<CategoryListItemVO> list(Integer pageNum, Integer pageSize);
-//
-//    PageData<CategoryListItemVO> listByParentId(Long parentId, Integer pageNum, Integer pageSize);
 }

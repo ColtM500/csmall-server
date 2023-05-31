@@ -45,4 +45,6 @@ public interface AttributeMapper {
 
     int countByNameAndTemplate(String name, Long templateId);
 
+    int countByNameAndTemplateAndNotId(String name, Long templateId, Long id);
+
 }
