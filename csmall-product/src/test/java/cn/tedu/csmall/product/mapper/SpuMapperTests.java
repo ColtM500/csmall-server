@@ -18,4 +18,11 @@ public class SpuMapperTests {
         int count = mapper.countByCategoryId(categoryId);
         log.debug("根据类别【{}】统计关联数据的数量：{}", categoryId, count);
     }
+
+    @Test
+    void countByBrandId(){
+        Long brandId = 1L;
+        int count = mapper.countByBrandId(brandId);
+        log.debug("根据类别【{}】统计关联数据的数量：{}", brandId, count);
+    }
 }

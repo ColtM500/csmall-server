@@ -1,9 +1,17 @@
 package cn.tedu.csmall.product.service;
 
 import cn.tedu.csmall.product.pojo.param.BrandAddNewParam;
+import cn.tedu.csmall.product.pojo.vo.BrandStandardVO;
+import cn.tedu.csmall.product.pojo.vo.BrandUpdateInfoParam;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface IBrandService {
     void addNew(BrandAddNewParam brandAddNewParam);
+
+    void delete(Long id);
+
+    BrandStandardVO getStandardById(Long id);
+
+    void updateInfoById(Long id, BrandUpdateInfoParam brandUpdateInfoParam);
 }

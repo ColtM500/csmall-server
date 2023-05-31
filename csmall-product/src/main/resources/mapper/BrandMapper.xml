@@ -4,4 +4,43 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.BrandMapper">
 
+    <!-- BrandStandardVO getStandardById(Long id); -->
+    <select id="getStandardById" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+        pms_brand
+        WHERE
+        id=#{id}
+    </select>
+
+    <sql id="StandardQueryFields">
+            <if test="true">
+                id, name, pinyin, logo, description,
+                keywords, sort, sales, product_count, comment_count,
+                positive_comment_count, enable
+            </if>
+    </sql>
+
+    <resultMap id="StandardResultMap" type="cn.tedu.csmall.product.pojo.vo.BrandStandardVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pinyin" property="pinyin"/>
+        <result column="logo" property="logo"/>
+        <result column="description" property="description"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+        <result column="sales" property="sales"/>
+        <result column="product_count" property="productCount"/>
+        <result column="comment_count" property="commentCount"/>
+        <result column="positive_comment_count" property="positiveCommentCount"/>
+        <result column="enable" property="enable"/>
+    </resultMap>
+
+<!--    int countByNameAndNotId(@Param("id")Long id, @Param("name")String name);-->
+    <select id="countByNameAndNotId" resultType="int">
+        select count(*)
+        from pms_brand
+        where name=#{name} and id!=#{id}
+    </select>
 </mapper>

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface BrandCategoryMapper extends BaseMapper<BrandCategory> {
 
     int countByCategoryId(Long categoryId);
+
+    int countByBrand(Long brandId);
 }

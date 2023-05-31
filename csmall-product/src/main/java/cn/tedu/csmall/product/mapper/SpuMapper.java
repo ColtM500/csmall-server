@@ -13,4 +13,6 @@ public interface SpuMapper extends BaseMapper<Spu> {
      * @return
      */
     int countByCategoryId(Long categoryId);
+
+    int countByBrandId(Long brandId);
 }

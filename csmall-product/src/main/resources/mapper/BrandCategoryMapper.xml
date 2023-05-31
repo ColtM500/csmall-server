@@ -4,6 +4,11 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.BrandCategoryMapper">
 
-
+<!--    int countByBrand(Long brandId);-->
+    <select id="countByBrand" resultType="int">
+        select count(*)
+        from pms_brand_category
+        where brand_id = #{brandId}
+    </select>
 
 </mapper>

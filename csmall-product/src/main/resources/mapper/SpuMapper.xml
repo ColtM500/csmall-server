@@ -4,9 +4,10 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.SpuMapper">
 
-    <!--    int countByCategoryId(Long categoryId);-->
-    <select id="countByCategoryId" resultType="int">
-        select count(*) from pms_spu where category_id=#{categoryId}
+    <!--    int countByBrandId(Long brandId);-->
+    <select id="countByBrandId" resultType="int">
+        select count(*)
+        from pms_spu
+        where brand_id = #{brandId}
     </select>
-
 </mapper>
