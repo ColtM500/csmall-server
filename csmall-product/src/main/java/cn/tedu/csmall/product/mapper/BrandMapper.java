@@ -1,6 +1,7 @@
 package cn.tedu.csmall.product.mapper;
 
 import cn.tedu.csmall.product.pojo.entity.Brand;
+import cn.tedu.csmall.product.pojo.vo.BrandListItemVO;
 import cn.tedu.csmall.product.pojo.vo.BrandStandardVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,5 +16,5 @@ public interface BrandMapper extends BaseMapper<Brand> {
 
     int countByNameAndNotId(@Param("id")Long id, @Param("name")String name);
 
-
+    List<BrandListItemVO> list();
 }

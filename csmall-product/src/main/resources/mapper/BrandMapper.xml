@@ -43,4 +43,37 @@
         from pms_brand
         where name=#{name} and id!=#{id}
     </select>
+
+<!--    List<BrandListItemVO> list();-->
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        pms_brand
+        ORDER BY
+        sort DESC, id DESC
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id, name, pinyin, logo, description,
+            keywords, sort, sales, product_count, comment_count,
+            positive_comment_count, enable
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.BrandListItemVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pinyin" property="pinyin"/>
+        <result column="logo" property="logo"/>
+        <result column="description" property="description"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+        <result column="sales" property="sales"/>
+        <result column="product_count" property="productCount"/>
+        <result column="comment_count" property="commentCount"/>
+        <result column="positive_comment_count" property="positiveCommentCount"/>
+    </resultMap>
 </mapper>

@@ -1,6 +1,8 @@
 package cn.tedu.csmall.product.mapper;
 
+import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.product.pojo.entity.Brand;
+import cn.tedu.csmall.product.pojo.vo.BrandListItemVO;
 import cn.tedu.csmall.product.pojo.vo.BrandStandardVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @SpringBootTest
@@ -52,5 +55,14 @@ public class BrandMapperTests {
         String name = "华为";
         int count = mapper.countByNameAndNotId(id, name);
         log.debug("根据名称【{}】且非ID【{}】统计数量完成，统计结果：{}", name, id, count);
+    }
+
+    @Test
+    void list() {
+        List<BrandListItemVO> list = mapper.list();
+        log.debug("查询列表完成，结果：{}", list);
+        for (Object item : list) {
+            log.debug("列表项：{}", item);
+        }
     }
 }
