@@ -217,5 +217,4 @@ public class BrandServiceImpl implements IBrandService {
         }
     }
 
-
 }
