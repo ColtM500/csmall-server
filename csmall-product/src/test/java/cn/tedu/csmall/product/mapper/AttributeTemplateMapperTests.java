@@ -58,4 +58,5 @@ public class AttributeTemplateMapperTests {
             log.debug("列表项：{}", item);
         }
     }
+
 }

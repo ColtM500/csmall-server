@@ -103,4 +103,11 @@
         from pms_attribute
         where name=#{name} and template_id=#{templateId} and id!=#{id}
     </select>
+
+<!--    int countByTemplateId(Long template);-->
+    <select id="countByTemplateId" resultType="int">
+        SELECT count(*)
+        from pms_attribute
+        where template_id=#{templateId}
+    </select>
 </mapper>

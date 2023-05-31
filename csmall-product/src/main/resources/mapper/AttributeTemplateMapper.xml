@@ -60,4 +60,6 @@
         <result column="keywords" property="keywords"/>
         <result column="sort" property="sort"/>
     </resultMap>
+
+
 </mapper>

@@ -5,6 +5,7 @@ import cn.tedu.csmall.product.pojo.param.AttributeAddNewParam;
 import cn.tedu.csmall.product.pojo.vo.AttributeListItemVO;
 import cn.tedu.csmall.product.pojo.vo.AttributeStandardVO;
 import cn.tedu.csmall.product.pojo.vo.AttributeUpdateInfoParam;
+import cn.tedu.csmall.product.pojo.vo.CategoryListItemVO;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -40,11 +41,7 @@ public interface IAttributeService {
      */
     AttributeStandardVO getStandardById(Long id);
 
-    /**
-     * 根据属性模板id查询属性列表
-     *
-     * @param templateId 属性模板ID
-     * @return 属性列表的集合
-     */
-    PageData<AttributeListItemVO> listByTemplateId(Long templateId);
+    PageData<AttributeListItemVO> listByTemplateId(Long parentId, Integer pageNum);
+
+    PageData<AttributeListItemVO> listByTemplateId(Long parentId, Integer pageNum, Integer pageSize);
 }

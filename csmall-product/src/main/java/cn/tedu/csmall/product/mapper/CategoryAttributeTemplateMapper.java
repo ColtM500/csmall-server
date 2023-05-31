@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface CategoryAttributeTemplateMapper extends BaseMapper<CategoryAttributeTemplate> {
 
     int countByCategoryId(Long categoryId);
+
+    int countByAttributeTemplateId(Long attributeTemplateId);
 }

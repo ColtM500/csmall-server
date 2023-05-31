@@ -4,13 +4,14 @@ package cn.tedu.csmall.product.mapper;
 import cn.tedu.csmall.product.pojo.entity.Attribute;
 import cn.tedu.csmall.product.pojo.vo.AttributeListItemVO;
 import cn.tedu.csmall.product.pojo.vo.AttributeStandardVO;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface AttributeMapper {
+public interface AttributeMapper extends BaseMapper<Attribute> {
 
     /**
      * 批量插入属性数据
@@ -45,6 +46,8 @@ public interface AttributeMapper {
 
     int countByNameAndTemplate(String name, Long templateId);
 
-    int countByNameAndTemplateAndNotId(String name, Long templateId, Long id);
+    int countByNameAndTemplateAndNotId(Long id,String name, Long templateId );
+
+    int countByTemplateId(Long template);
 
 }

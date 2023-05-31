@@ -11,4 +11,10 @@
         where category_id = #{categoryId}
     </select>
 
+    <!--    int countByAttributeTemplateId(Long attributeTemplateId);-->
+    <select id="countByAttributeTemplateId" resultType="int">
+        select count(*)
+        from pms_category_attribute_template
+        where attribute_template_id=#{attributeTemplateId}
+    </select>
 </mapper>

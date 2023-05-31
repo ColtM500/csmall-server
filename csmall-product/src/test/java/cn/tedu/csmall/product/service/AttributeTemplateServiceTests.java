@@ -40,8 +40,19 @@ public class AttributeTemplateServiceTests {
     }
 
     @Test
+    void delete() {
+        Long id = 18L;
+        try {
+            service.deleteById(id);
+            log.debug("测试删除数据成功！");
+        } catch (ServiceException e) {
+            log.debug(e.getMessage());
+        }
+    }
+
+    @Test
     void getStandardById(){
-        Long id = 1L;
+        Long id = 18L;
         try {
             AttributeTemplateStandardVO standardById = service.getStandardById(id);
             log.debug("根据id【{}】查询完成，查询结果:{}",standardById);
@@ -81,4 +92,6 @@ public class AttributeTemplateServiceTests {
             log.debug(e.getMessage());
         }
     }
+
+
 }

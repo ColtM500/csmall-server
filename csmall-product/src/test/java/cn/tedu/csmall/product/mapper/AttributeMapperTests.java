@@ -71,7 +71,14 @@ public class AttributeMapperTests {
         String name = "商品毛重";
         Long templateId = 2L;
         Long attributeId = 4L;
-        int count = mapper.countByNameAndTemplateAndNotId(name, templateId, attributeId);
+        int count = mapper.countByNameAndTemplateAndNotId(attributeId,name, templateId );
         log.debug("根据名字【{}】，templateId【{}】,不根据attributeId【{}】查询数据详情完成，查询结果：{}",name, templateId, attributeId,count);
+    }
+
+    @Test
+    void countByTemplateId(){
+        Long id = 1L;
+        int count = mapper.countByTemplateId(id);
+        log.debug("根据id【{}】查询数据详情完成，查询结果：{}", id, count);
     }
 }

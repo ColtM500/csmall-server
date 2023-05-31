@@ -4,7 +4,10 @@ import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.commons.util.PageInfoToPageDataConvert;
 import cn.tedu.csmall.commons.web.ServiceCode;
+import cn.tedu.csmall.product.mapper.AttributeMapper;
 import cn.tedu.csmall.product.mapper.AttributeTemplateMapper;
+import cn.tedu.csmall.product.mapper.CategoryAttributeTemplateMapper;
+import cn.tedu.csmall.product.mapper.SpuMapper;
 import cn.tedu.csmall.product.pojo.entity.AttributeTemplate;
 import cn.tedu.csmall.product.pojo.param.AttributeTemplateAddNewParam;
 import cn.tedu.csmall.product.pojo.vo.*;
@@ -26,6 +29,13 @@ public class AttributeTemplateService implements IAttributeTemplateService {
 
     @Autowired
     private AttributeTemplateMapper attributeTemplateMapper;
+    @Autowired
+    private AttributeMapper attributeMapper;
+    @Autowired
+    private CategoryAttributeTemplateMapper categoryAttributeTemplateMapper;
+    @Autowired
+    private SpuMapper spuMapper;
+
 
     @Override
     public void addNew(AttributeTemplateAddNewParam attributeTemplateAddNewParam) {
@@ -58,8 +68,52 @@ public class AttributeTemplateService implements IAttributeTemplateService {
     @Override
     public void deleteById(Long id) {
         log.debug("开始处理【根据ID删除属性模板】的业务，参数：{}", id);
-        //检查尝试删除的属性是否存在
+        // 检查尝试删除的属性是否存在
+        Object queryResult = attributeTemplateMapper.getStandardById(id);
+        if (queryResult == null) {
+            String message = "删除属性模板失败，尝试访问的数据不存在！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
+        }
 
+        // 如果有属性关联到了此属性模板，不允许删除
+        {
+            int count = attributeMapper.countByTemplateId(id);
+            if (count > 0) {
+                String message = "删除属性模板失败！当前属性模板仍存在关联的属性！";
+                log.warn(message);
+                throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+            }
+        }
+
+        // 如果有属性模板关联到了此属性模板，不允许删除
+        {
+            int count = categoryAttributeTemplateMapper.countByAttributeTemplateId(id);
+            if (count > 0) {
+                String message = "删除属性模板失败！当前属性模板仍存在关联的属性模板！";
+                log.warn(message);
+                throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+            }
+        }
+
+        // 如果有SPU关联到了此属性模板，不允许删除
+        {
+            int count = spuMapper.countByAttributeTemplateId(id);
+            if (count > 0) {
+                String message = "删除属性模板失败！当前属性模板仍存在关联的SPU！";
+                log.warn(message);
+                throw new ServiceException(ServiceCode.ERROR_CONFLICT, message);
+            }
+        }
+
+        // 执行删除
+        log.debug("即将执行删除数据，参数：{}", id);
+        int rows = attributeTemplateMapper.deleteById(id);
+        if (rows != 1) {
+            String message = "删除属性模板失败，服务器忙，请稍后再次尝试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_INSERT, message);
+        }
     }
 
     @Override

@@ -17,4 +17,10 @@ public class CategoryAttributeTemplateMapperTests {
         int count = mapper.countByCategoryId(7L);
         log.debug("根据类别id查询品牌个数为:{}", count);
     }
+
+    @Test
+    void countByAttributeTemplateId(){
+        int count = mapper.countByAttributeTemplateId(1L);
+        log.debug("根据类别id查询品牌个数为:{}", count);
+    }
 }
