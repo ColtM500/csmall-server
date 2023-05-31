@@ -220,6 +220,7 @@ public class CategoryServiceImpl implements ICategoryService {
             String message = "修改类别失败，类别信息不存在!";
             throw new ServiceException(ServiceCode.ERROR_NOT_FOUND, message);
         }
+
         //调用countByNameAndNotId(统计)
         int count = categoryMapper.countByNameAndNotId(id, categoryUpdateInfoParam.getName());
         if (count>0){
