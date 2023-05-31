@@ -4,7 +4,9 @@ import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.commons.web.JsonResult;
 import cn.tedu.csmall.product.pojo.param.CategoryAddNewParam;
+import cn.tedu.csmall.product.pojo.param.CategoryUpdateInfoParam;
 import cn.tedu.csmall.product.pojo.vo.CategoryListItemVO;
+import cn.tedu.csmall.product.pojo.vo.CategoryStandardVO;
 import cn.tedu.csmall.product.pojo.vo.CategoryTreeItemVO;
 import cn.tedu.csmall.product.service.ICategoryService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -19,6 +21,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -139,5 +142,33 @@ public class CategoryController {
     }
 
 
+    // http://localhost:9180/categories/9527/update
+    @PostMapping("/{id:[0-9]+}/update")
+    @PreAuthorize("hasAuthority('/pms/category/update')")
+    @ApiOperation("修改类别详情")
+    @ApiOperationSupport(order = 300)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "类别ID", required = true, dataType = "long")
+    })
+    public JsonResult<Void> updateInfoById(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id,
+                                           @Valid CategoryUpdateInfoParam categoryUpdateInfoParam) {
+        log.debug("开始处理【修改类别详情】的请求，ID：{}，新数据：{}", id, categoryUpdateInfoParam);
+        categoryService.updateStandardById(id, categoryUpdateInfoParam);
+        return JsonResult.ok();
+    }
 
+    // http://localhost:9180/categories/9527
+    @GetMapping("/{id:[0-9]+}")
+    @PreAuthorize("hasAuthority('/pms/category/read')")
+    @ApiOperation("根据ID查询类别详情")
+    @ApiOperationSupport(order = 410)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "类别ID", required = true, dataType = "long")
+    })
+    public JsonResult<CategoryStandardVO> getStandardById(
+            @PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
+        log.debug("开始处理【根据ID查询类别详情】的请求，参数：{}", id);
+        CategoryStandardVO queryResult = categoryService.getStandardById(id);
+        return JsonResult.ok(queryResult);
+    }
 }

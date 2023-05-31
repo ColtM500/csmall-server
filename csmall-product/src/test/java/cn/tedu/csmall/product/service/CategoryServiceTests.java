@@ -3,6 +3,8 @@ package cn.tedu.csmall.product.service;
 import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.product.pojo.param.CategoryAddNewParam;
+import cn.tedu.csmall.product.pojo.param.CategoryUpdateInfoParam;
+import cn.tedu.csmall.product.pojo.vo.CategoryStandardVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +95,34 @@ public class CategoryServiceTests {
         log.debug("查询列表完成");
         for (Object item : list) {
             log.debug("列表项：{}", item);
+        }
+    }
+
+    @Test
+    void updateInfoById() {
+        Long id = 90L;
+        CategoryUpdateInfoParam categoryUpdateInfoParam = new CategoryUpdateInfoParam();
+        categoryUpdateInfoParam.setName("新-类别");
+        categoryUpdateInfoParam.setKeywords("新-关键词");
+        categoryUpdateInfoParam.setSort(188);
+
+        try {
+            service.updateStandardById(id, categoryUpdateInfoParam);
+            log.debug("测试修改数据成功！");
+        } catch (ServiceException e) {
+            log.debug(e.getMessage());
+        }
+    }
+
+    @Test
+    void getStandardById() {
+        Long id = 90L;
+
+        try {
+            CategoryStandardVO category = service.getStandardById(id);
+            log.debug("查询类别详情成功！结果：{}", category);
+        } catch (ServiceException e) {
+            log.debug("捕获到异常，其中的消息：{}", e.getMessage());
         }
     }
 }
