@@ -1,6 +1,7 @@
 package cn.tedu.csmall.product.mapper;
 
 import cn.tedu.csmall.product.pojo.entity.Picture;
+import cn.tedu.csmall.product.pojo.vo.PictureListItemVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,17 +57,14 @@ public class PictureMapperTests {
         log.debug("根据id【{}】查询数据详情完成，查询结果：{}", id, queryResult);
     }
 
-//    @Test
-//    void list() {
-//        Long albumId = 1L;
-//        Integer pageNum = 1;
-//        Integer pageSize = 5;
-//        PageData<?> pageData = repository.listByAlbumId(albumId, pageNum, pageSize);
-//        List<?> list = pageData.getList();
-//        log.debug("查询列表完成，结果：{}", pageData);
-//        for (Object item : list) {
-//            log.debug("列表项：{}", item);
-//        }
-//    }
+    @Test
+    void list() {
+        Long albumId = 1L;
+        List<PictureListItemVO> list = mapper.listByAlbumId(albumId);
+        log.debug("查询列表完成，结果：{}", list);
+        for (Object item : list) {
+            log.debug("列表项：{}", item);
+        }
+    }
 
 }
