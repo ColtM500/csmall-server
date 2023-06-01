@@ -33,7 +33,9 @@ public interface IPictureService {
      *
      * @param id 图片ID
      */
-    void setCover(Long id);
+    void setCover(Long id);//固定将cover设为1
+
+
 
     /**
      * 根据相册ID查询图片数据列表，将使用默认的每页记录数

@@ -76,4 +76,42 @@
         <result column="height" property="height"/>
         <result column="sort" property="sort"/>
     </resultMap>
+
+    <!--    int updateNotCoverByAlbumId(Long albumId);-->
+<!--    <update id="updateNotCoverByAlbumId">-->
+<!--        UPDATE-->
+<!--        pms_picture-->
+<!--        <set>-->
+<!--            <if test="id != null">-->
+<!--                id=#{id},-->
+<!--            </if>-->
+<!--            <if test="albumId != null">-->
+<!--                album_id=#{albumId},-->
+<!--            </if>-->
+<!--            <if test="url != null">-->
+<!--                url=#{url},-->
+<!--            </if>-->
+<!--            <if test="description != null">-->
+<!--                description=#{description},-->
+<!--            </if>-->
+<!--            <if test="width != null">-->
+<!--                width=#{width},-->
+<!--            </if>-->
+<!--            <if test="height != null">-->
+<!--                height=#{height},-->
+<!--            </if>-->
+<!--            <if test="isCover != null">-->
+<!--                is_cover=#{isCover},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        WHERE album_id=#{albumId}-->
+<!--    </update>-->
+
+    <update id="updateNotCoverByAlbumId">
+        <foreach collection="list" item="picture"  separator=",">
+        update pms_picture set
+            is_cover=#{picture.isCover}
+        where album_id=#{albumId}
+        </foreach>
+    </update>
 </mapper>

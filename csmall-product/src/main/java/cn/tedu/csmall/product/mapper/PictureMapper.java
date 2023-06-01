@@ -3,6 +3,7 @@ package cn.tedu.csmall.product.mapper;
 import cn.tedu.csmall.product.pojo.entity.Picture;
 import cn.tedu.csmall.product.pojo.vo.PictureListItemVO;
 import cn.tedu.csmall.product.pojo.vo.PictureStandardVO;
+import cn.tedu.csmall.product.pojo.vo.PictureUpdateListItemVO;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
@@ -34,4 +35,6 @@ public interface PictureMapper extends BaseMapper<Picture> {
      * @return 图片数据列表
      */
     List<PictureListItemVO> listByAlbumId(Long albumId);
+
+    List<PictureUpdateListItemVO> updateNotCoverByAlbumId(Long albumId);
 }

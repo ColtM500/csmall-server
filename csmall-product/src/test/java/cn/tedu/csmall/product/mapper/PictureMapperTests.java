@@ -2,6 +2,7 @@ package cn.tedu.csmall.product.mapper;
 
 import cn.tedu.csmall.product.pojo.entity.Picture;
 import cn.tedu.csmall.product.pojo.vo.PictureListItemVO;
+import cn.tedu.csmall.product.pojo.vo.PictureUpdateListItemVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,12 @@ public class PictureMapperTests {
         log.debug("批量插入完成，受影响的行数：{}", rows);
     }
 
-//    @Test
-//    void countByAlbumId() {
-//        Long albumId = 21L;
-//        int count = mapper.countByAlbum(albumId);
-//        log.debug("统计完成，根据相册【{}】统计图片的数量，结果：{}", albumId, count);
-//    }
+    @Test
+    void updateNotCoverByAlbumId() {
+        PictureUpdateListItemVO pictureUpdateListItemVO = mapper.update();
+        pictureUpdateListItemVO.setIsCover(1);
+        System.out.println("更新完成，受影响的行数：" + pictureUpdateListItemVO);
+    }
 
     @Test
     void getStandardById() {
