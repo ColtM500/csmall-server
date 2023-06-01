@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.csmall.product.mapper.PictureMapper">
+    <!--    int insertBatch(List<Picture> pictureList);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_picture (
+        album_id, url, is_cover, description, width,
+        height, sort
+        ) VALUES
+        <foreach collection="list" item="picture" separator=",">
+            (
+            #{picture.albumId}, #{picture.url}, #{picture.isCover}, #{picture.description}, #{picture.width},
+            #{picture.height}, #{picture.sort}
+            )
+        </foreach>
+    </insert>
+
+    <!-- PictureStandardVO getStandardById(Long id); -->
+    <select id="getStandardById" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+        pms_picture
+        WHERE
+        id=#{id}
+    </select>
+
+    <sql id="StandardQueryFields">
+        <if test="true">
+            id, album_id, url, is_cover, description,
+            width, height, sort
+        </if>
+    </sql>
+
+    <resultMap id="StandardResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.PictureStandardVO">
+        <id column="id" property="id"/>
+        <result column="album_id" property="albumId"/>
+        <result column="url" property="url"/>
+        <result column="is_cover" property="isCover"/>
+        <result column="description" property="description"/>
+        <result column="width" property="width"/>
+        <result column="height" property="height"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+
+    <!-- List<PictureListItemVO> listByAlbumId(Long albumId); -->
+    <select id="listByAlbumId" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        pms_picture
+        WHERE
+        album_id=#{albumId}
+        ORDER BY
+        is_cover DESC, sort DESC, id DESC
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id, album_id, url, is_cover, description,
+            width, height, sort
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.PictureListItemVO">
+        <id column="id" property="id"/>
+        <result column="album_id" property="albumId"/>
+        <result column="url" property="url"/>
+        <result column="is_cover" property="isCover"/>
+        <result column="description" property="description"/>
+        <result column="width" property="width"/>
+        <result column="height" property="height"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+</mapper>
