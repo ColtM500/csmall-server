@@ -38,4 +38,15 @@ public class PictureServiceTests {
             log.debug(e.getMessage());
         }
     }
+
+    @Test
+    void setCover(){
+        try {
+            service.setCover(13L);
+            log.debug("根据id【{}】修改图片成功！");
+        } catch (ServiceException e) {
+            log.debug(e.getMessage());
+        }
+
+    }
 }

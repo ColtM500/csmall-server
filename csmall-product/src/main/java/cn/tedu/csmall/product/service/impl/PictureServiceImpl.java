@@ -12,6 +12,8 @@ import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
 import cn.tedu.csmall.product.pojo.vo.PictureListItemVO;
 import cn.tedu.csmall.product.pojo.vo.PictureStandardVO;
 import cn.tedu.csmall.product.service.IPictureService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -99,7 +101,8 @@ public class PictureServiceImpl implements IPictureService {
         }
 
         //查找图片对应的相册
-        AlbumStandardVO album = albumMapper.getStandardById(picture.getAlbumId());
+        Long albumId = picture.getAlbumId();
+        AlbumStandardVO album = albumMapper.getStandardById(albumId);
         if (album==null){
             String message = "设置封面图片失败，此图片的相册的数据不存在！";
             log.warn(message);
@@ -107,10 +110,27 @@ public class PictureServiceImpl implements IPictureService {
         }
 
         //将此相册中所有图片设置为“非封面”
-
-//        pictureMapper.updateNotCoverByAlbumId(picture1.getAlbumId());
+        UpdateWrapper<Picture> updateWrapper = new UpdateWrapper();
+        updateWrapper.eq("album_id", picture.getAlbumId());
+        Picture picture1 = new Picture();
+        picture1.setIsCover(0);
+        int rows = pictureMapper.update(picture1, updateWrapper);
+        if (rows < 1) {
+            String message = "设置封面图片失败，服务器忙，请稍后再次尝试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_UPDATE, message);
+        }
 
         //将指定图片设置为封面
+        Picture newPicture = new Picture();
+        newPicture.setId(id);
+        newPicture.setIsCover(1);
+        rows = pictureMapper.updateById(newPicture);
+        if (rows != 1) {
+            String message = "设置封面图片失败，服务器忙，请稍后再次尝试！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERROR_UPDATE, message);
+        }
     }
 
     @Override

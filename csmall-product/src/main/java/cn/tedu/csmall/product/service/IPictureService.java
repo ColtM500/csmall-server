@@ -33,7 +33,7 @@ public interface IPictureService {
      *
      * @param id 图片ID
      */
-    void setCover(Long id);//固定将cover设为1
+    void setCover(Long id);
 
 
 

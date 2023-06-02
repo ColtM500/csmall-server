@@ -44,12 +44,13 @@ public class PictureMapperTests {
         log.debug("批量插入完成，受影响的行数：{}", rows);
     }
 
-    @Test
-    void updateNotCoverByAlbumId() {
-        PictureUpdateListItemVO pictureUpdateListItemVO = mapper.update();
-        pictureUpdateListItemVO.setIsCover(1);
-        System.out.println("更新完成，受影响的行数：" + pictureUpdateListItemVO);
-    }
+//    @Test
+//    void updateNotCoverByAlbumId() {
+//        Picture picture = new Picture();
+//        PictureUpdateListItemVO pictureUpdateListItemVO = mapper.update(picture, );
+//        pictureUpdateListItemVO.setIsCover(1);
+//        System.out.println("更新完成，受影响的行数：" + pictureUpdateListItemVO);
+//    }
 
     @Test
     void getStandardById() {

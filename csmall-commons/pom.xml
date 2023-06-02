@@ -72,6 +72,11 @@
             <artifactId>jjwt</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- Spring Boot支持Redis编程的依赖项 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
         <!-- fastjson：实现对象与JSON的相互转换 -->
         <dependency>
             <groupId>com.alibaba</groupId>

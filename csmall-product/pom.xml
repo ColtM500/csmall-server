@@ -95,6 +95,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <!-- Spring Boot支持Redis编程的依赖项 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
         <!-- Spring Boot测试的依赖项 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
