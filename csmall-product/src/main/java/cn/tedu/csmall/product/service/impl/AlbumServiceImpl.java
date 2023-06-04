@@ -22,9 +22,11 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -168,10 +170,17 @@ public class AlbumServiceImpl implements IAlbumService {
         log.debug("将新的相册数据更新入到数据库，完成！");
     }
 
+    @Autowired
+    private RedisTemplate<String, Serializable> redisTemplate;
+
     @Override
     public AlbumStandardVO getStandardById(Long id) {
         log.debug("开始处理【根据ID查询相册详情】的业务,参数:{}",id);
-        AlbumStandardVO queryResult = albumMapper.getStandardById(id);
+//        AlbumStandardVO queryResult = albumMapper.getStandardById(id);
+        //从redis中取值
+        Serializable serializable = redisTemplate.opsForValue().get("album" + id);
+        //强转一下类型
+        AlbumStandardVO queryResult = (AlbumStandardVO) serializable;
         if (queryResult == null){
             String message = "查询相册详情失败，相册数据不存在!";
             log.warn(message);
