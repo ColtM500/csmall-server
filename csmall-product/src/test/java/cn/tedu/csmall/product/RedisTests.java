@@ -1,5 +1,6 @@
 package cn.tedu.csmall.product;
 
+import cn.tedu.csmall.product.cache.IAlbumCacheRepository;
 import cn.tedu.csmall.product.mapper.AlbumMapper;
 import cn.tedu.csmall.product.pojo.entity.Brand;
 import cn.tedu.csmall.product.pojo.vo.AlbumStandardVO;
@@ -122,6 +123,16 @@ public class RedisTests {
         System.out.println("从Redis中读取list完成，数据量：" + list.size());
         for (Serializable serializable: list) {
             System.out.println(serializable);
+        }
+    }
+
+    @Autowired
+    IAlbumCacheRepository repository;
+
+    @Test
+    void mysqlToRedis(){
+        for (long i = 1; i < 11; i++) {
+            repository.save(albumMapper.getStandardById(i));
         }
     }
 }
