@@ -15,7 +15,6 @@ public class AlbumCacheRepositoryImpl implements IAlbumCacheRepository {
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
 
-//    public static final String ITEM_KEY_PREFIX = "album:item";
 
     @Override
     public void save(AlbumStandardVO albumStandardVO) {

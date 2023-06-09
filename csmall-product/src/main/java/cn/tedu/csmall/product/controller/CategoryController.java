@@ -35,9 +35,10 @@ public class CategoryController {
 
     // http://localhost:9180/category/add-new?name=TestName001
     @PostMapping("/add-new")
+    @PreAuthorize("hasAuthority('/pms/category/add-new')")
     @ApiOperation("添加类别")
     @ApiOperationSupport(order = 100)
-    public JsonResult<Void> addNew(CategoryAddNewParam categoryAddNewParam){
+    public JsonResult<Void> addNew(@Valid CategoryAddNewParam categoryAddNewParam) {
         log.debug("开始处理【添加类别】的请求，参数：{}", categoryAddNewParam);
         categoryService.addNew(categoryAddNewParam);
         return JsonResult.ok();
@@ -88,13 +89,13 @@ public class CategoryController {
     // http://localhost:9180/categories/1/display
     @PostMapping("/{id:[0-9]+}/display")
     @PreAuthorize("hasAuthority('/pms/category/update')")
-    @ApiOperation("显示")
+    @ApiOperation("显示类别")
     @ApiOperationSupport(order = 312)
-    @ApiImplicitParams({
+    @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "类别ID", required = true, dataType = "long")
     })
-    public JsonResult<Void> setDisplay(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
-        log.debug("开始处理【显示】的请求，参数：{}", id);
+    public JsonResult setDisplay(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
+        log.debug("开始处理【显示类别】的请求，参数：{}", id);
         categoryService.setDisplay(id);
         return JsonResult.ok();
     }
@@ -102,13 +103,13 @@ public class CategoryController {
     // http://localhost:9180/categories/1/hidden
     @PostMapping("/{id:[0-9]+}/hidden")
     @PreAuthorize("hasAuthority('/pms/category/update')")
-    @ApiOperation("隐藏")
+    @ApiOperation("隐藏类别")
     @ApiOperationSupport(order = 313)
-    @ApiImplicitParams({
+    @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "类别ID", required = true, dataType = "long")
     })
-    public JsonResult<Void> setHidden(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
-        log.debug("开始处理【隐藏】的请求，参数：{}", id);
+    public JsonResult setHidden(@PathVariable @Range(min = 1, message = "请提交有效的类别ID值！") Long id) {
+        log.debug("开始处理【隐藏类别】的请求，参数：{}", id);
         categoryService.setHidden(id);
         return JsonResult.ok();
     }
