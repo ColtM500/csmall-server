@@ -22,7 +22,7 @@ public class CacheSchedule {
     // 更多内容参考：
     // https://segmentfault.com/a/1190000021574315
     // https://blog.csdn.net/study_665/article/details/123506946
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedRate = 3 * 60 * 1000)
     public void xxx(){
         log.debug("CacheSchedule.xxx()");
     }
