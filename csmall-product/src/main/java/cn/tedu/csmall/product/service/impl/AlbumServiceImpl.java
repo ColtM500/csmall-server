@@ -4,6 +4,7 @@ import cn.tedu.csmall.commons.ex.ServiceException;
 import cn.tedu.csmall.commons.pojo.vo.PageData;
 import cn.tedu.csmall.commons.util.PageInfoToPageDataConvert;
 import cn.tedu.csmall.commons.web.ServiceCode;
+import cn.tedu.csmall.product.cache.IAlbumCacheRepository;
 import cn.tedu.csmall.product.mapper.AlbumMapper;
 import cn.tedu.csmall.product.mapper.PictureMapper;
 import cn.tedu.csmall.product.mapper.SkuMapper;
@@ -170,19 +171,13 @@ public class AlbumServiceImpl implements IAlbumService {
         log.debug("将新的相册数据更新入到数据库，完成！");
     }
 
-//    @Autowired
-//    private RedisTemplate<String, Serializable> redisTemplate;
+    @Autowired
+    private IAlbumCacheRepository albumCacheRepository;
 
     @Override
     public AlbumStandardVO getStandardById(Long id) {
         log.debug("开始处理【根据ID查询相册详情】的业务,参数:{}",id);
-        AlbumStandardVO queryResult = albumMapper.getStandardById(id);
-
-//        //从redis中取值
-//        Serializable serializable = redisTemplate.opsForValue().get("album" + id);
-        //强转一下类型
-//        AlbumStandardVO queryResult = (AlbumStandardVO) serializable;
-
+        AlbumStandardVO queryResult = albumCacheRepository.getStandardById(id);
         if (queryResult == null){
             String message = "查询相册详情失败，相册数据不存在!";
             log.warn(message);

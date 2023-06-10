@@ -42,8 +42,8 @@ public class SkuServiceImpl implements ISkuService {
         log.debug("开始处理【新增sku】的业务，参数:{}", skuAddNewParam);
         log.debug("开始处理【新增SKU】的业务，参数：{}", skuAddNewParam);
         // 检查品牌：是否存在，是否启用
-        Long brandId = skuAddNewParam.getSpuId();
-        SpuStandardVO spu = spuMapper.getStandardById(brandId);
+        Long spuId = skuAddNewParam.getSpuId();
+        SpuStandardVO spu = spuMapper.getStandardById(spuId);
         if (spu == null) {
             String message = "新增SKU失败，SPU数据不存在！";
             log.warn(message);

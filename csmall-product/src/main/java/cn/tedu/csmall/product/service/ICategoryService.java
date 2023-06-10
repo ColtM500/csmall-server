@@ -14,9 +14,9 @@ import java.util.List;
 @Transactional
 public interface ICategoryService {
 
-    String Enable_Text[]={"禁用", "启用"};
+    String[] Enable_Text={"禁用", "启用"};
 
-    String Display_Text[]={"显示", "隐藏"};
+    String[] Display_Text={"显示", "隐藏"};
 
     void addNew(CategoryAddNewParam categoryAddNewParam);
 

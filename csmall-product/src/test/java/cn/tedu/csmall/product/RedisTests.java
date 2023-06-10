@@ -132,7 +132,7 @@ public class RedisTests {
     @Test
     void mysqlToRedis(){
         for (long i = 1; i < 11; i++) {
-            repository.save(albumMapper.getStandardById(i));
+            repository.save(albumMapper.getStandardById(i + 0L));
         }
     }
 }

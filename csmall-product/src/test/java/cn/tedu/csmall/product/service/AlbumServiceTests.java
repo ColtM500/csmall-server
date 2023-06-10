@@ -63,7 +63,7 @@ public class AlbumServiceTests {
 
     @Test
     void getStandardById(){
-        Long id = 3L;
+        Long id = 1L;
         try {
             service.getStandardById(id);
             System.out.println("根据ID查询数据完成!");
