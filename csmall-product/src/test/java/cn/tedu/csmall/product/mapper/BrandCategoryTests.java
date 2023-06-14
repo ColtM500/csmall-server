@@ -14,9 +14,9 @@ public class BrandCategoryTests {
     BrandCategoryMapper brandCategoryMapper;
 
     @Test
-    void countByBrand() {
+    void countByBrandId() {
         Long brandId = 1L;
-        int count = brandCategoryMapper.countByBrand(brandId);
+        int count = brandCategoryMapper.countByBrandId(brandId);
         log.debug("根据品牌【{}】统计关联数据的数量：{}", brandId, count);
     }
 }

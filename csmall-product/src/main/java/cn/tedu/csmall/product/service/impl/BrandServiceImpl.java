@@ -79,7 +79,7 @@ public class BrandServiceImpl implements IBrandService {
 
         //检查此品牌是否关联了种类
         {
-            int count = brandCategoryMapper.countByBrand(id);
+            int count = brandCategoryMapper.countByBrandId(id);
             if (count>0){
                 String message = "删除品牌失败！当前品牌仍关联了品牌！";
                 log.warn(message);

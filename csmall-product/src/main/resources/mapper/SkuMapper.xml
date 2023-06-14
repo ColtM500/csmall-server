@@ -4,6 +4,22 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.SkuMapper">
 
+    <!-- int insertBatch(List<Sku> skuList); -->
+    <insert id="insertBatch">
+        INSERT INTO pms_sku (
+        id, spu_id, title, bar_code, attribute_template_id,
+        specifications, album_id, pictures, price, stock,
+        stock_threshold, sort
+        ) VALUES
+        <foreach collection="list" item="sku" separator=",">
+            (
+            #{sku.id}, #{sku.spuId}, #{sku.title}, #{sku.barCode}, #{sku.attributeTemplateId},
+            #{sku.specifications}, #{sku.albumId}, #{sku.pictures}, #{sku.price}, #{sku.stock},
+            #{sku.stockThreshold}, #{sku.sort}
+            )
+        </foreach>
+    </insert>
+
 <!--    SkuStandardVO getStandardById(Long id);-->
     <select id="getStandardById" resultMap="StandardResultMap">
         SELECT

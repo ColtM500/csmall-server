@@ -12,6 +12,14 @@ import java.util.List;
 @Repository
 public interface AlbumMapper extends BaseMapper<Album> {
 
+    /**
+     * 批量插入相册数据
+     *
+     * @param albums 相册列表
+     * @return 受影响的行数
+     */
+    int insertBatch(List<Album> albums);
+
     List<AlbumListItemVO> list();
 
     AlbumStandardVO getStandardById(Long id);

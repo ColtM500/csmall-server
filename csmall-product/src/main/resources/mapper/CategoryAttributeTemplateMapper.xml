@@ -17,4 +17,62 @@
         from pms_category_attribute_template
         where attribute_template_id=#{attributeTemplateId}
     </select>
+
+    <!-- int insertBatch(List<CategoryAttributeTemplate> categoryAttributeTemplateList); -->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_category_attribute_template (
+        category_id, attribute_template_id
+        ) VALUES
+        <foreach collection="list" item="categoryAttributeTemplate" separator=",">
+            (
+            #{categoryAttributeTemplate.categoryId}, #{categoryAttributeTemplate.attributeTemplateId}
+            )
+        </foreach>
+    </insert>
+
+    <!-- CategoryAttributeTemplateStandardVO getStandardById(Long id); -->
+    <select id="getStandardById" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+        pms_category_attribute_template
+        WHERE
+        id=#{id}
+    </select>
+
+    <sql id="StandardQueryFields">
+        <if test="true">
+            category_id, attribute_template_id
+        </if>
+    </sql>
+
+    <resultMap id="StandardResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.CategoryAttributeTemplateStandardVO">
+        <id column="id" property="id"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="attribute_template_id" property="attributeTemplateId"/>
+    </resultMap>
+
+    <!-- List<CategoryAttributeTemplateListItemVO> list(); -->
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        pms_category_attribute_template
+        ORDER BY
+        id DESC
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            category_id, attribute_template_id
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.CategoryAttributeTemplateListItemVO">
+        <id column="id" property="id"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="attribute_template_id" property="attributeTemplateId"/>
+    </resultMap>
 </mapper>

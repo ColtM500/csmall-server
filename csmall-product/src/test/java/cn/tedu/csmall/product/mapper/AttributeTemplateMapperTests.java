@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -18,6 +19,19 @@ public class AttributeTemplateMapperTests {
 
     @Autowired(required = false)
     AttributeTemplateMapper mapper;
+
+    @Test
+    void insertBatch() {
+        List<AttributeTemplate> attributeTemplates = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            AttributeTemplate attributeTemplate = new AttributeTemplate();
+            attributeTemplate.setName("批量插入测试数据" + i);
+            attributeTemplates.add(attributeTemplate);
+        }
+
+        int rows = mapper.insertBatch(attributeTemplates);
+        log.debug("批量插入完成，受影响的行数：{}", rows);
+    }
 
     @Test
     void insert() {

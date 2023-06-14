@@ -1,5 +1,6 @@
 package cn.tedu.csmall.product.mapper;
 
+import cn.tedu.csmall.product.pojo.entity.Spu;
 import cn.tedu.csmall.product.pojo.vo.PictureListItemVO;
 import cn.tedu.csmall.product.pojo.vo.SpuFullInfoVO;
 import cn.tedu.csmall.product.pojo.vo.SpuListItemVO;
@@ -7,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -16,6 +19,21 @@ public class SpuMapperTests {
 
     @Autowired
     SpuMapper mapper;
+
+    @Transactional // 添加此注解，可使得插入的数据不保存，以避免不修改测试数据时反复执行导致的主键冲突错误
+    @Test
+    void insertBatch() {
+        List<Spu> spuList = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            Spu spu = new Spu();
+            spu.setId(i + 0L);
+            spu.setTitle("批量插入测试数据" + i);
+            spuList.add(spu);
+        }
+
+        int rows = mapper.insertBatch(spuList);
+        log.debug("批量插入完成，受影响的行数：{}", rows);
+    }
 
     @Test
     void countByCategoryId(){

@@ -4,6 +4,28 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.SpuMapper">
 
+    <!-- int insertBatch(List<Spu> spuList); -->
+    <insert id="insertBatch">
+        INSERT INTO pms_spu (
+        id, name, type_number, title, description,
+        list_price, stock, stock_threshold, unit, brand_id,
+        brand_name, category_id, category_name, attribute_template_id, album_id,
+        pictures, keywords, tags, sales, comment_count,
+        positive_comment_count, sort, is_deleted, is_published, is_new_arrival,
+        is_recommend, is_checked, gmt_check
+        ) VALUES
+        <foreach collection="list" item="spu" separator=",">
+            (
+            #{spu.id}, #{spu.name}, #{spu.typeNumber}, #{spu.title}, #{spu.description},
+            #{spu.listPrice}, #{spu.stock}, #{spu.stockThreshold}, #{spu.unit}, #{spu.brandId},
+            #{spu.brandName}, #{spu.categoryId}, #{spu.categoryName}, #{spu.attributeTemplateId}, #{spu.albumId},
+            #{spu.pictures}, #{spu.keywords}, #{spu.tags}, #{spu.sales}, #{spu.commentCount},
+            #{spu.positiveCommentCount}, #{spu.sort}, #{spu.isDeleted}, #{spu.isPublished}, #{spu.isNewArrival},
+            #{spu.isRecommend}, #{spu.isChecked}, #{spu.gmtCheck}
+            )
+        </foreach>
+    </insert>
+
     <!--    int countByCategoryId(Long categoryId);-->
     <select id="countByCategoryId" resultType="int">
         select count(*)

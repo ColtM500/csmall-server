@@ -6,17 +6,27 @@
 
     <cache/>
 
-<!--    List<AlbumListItemVO> list();-->
-<select id="list" resultType="cn.tedu.csmall.product.pojo.vo.AlbumListItemVO">
-    select  id, name, description, sort
-    from pms_album
-    order by sort desc, id desc
-</select>
+    <!-- int insertBatch(List<Album> albumList); -->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_album (
+        name, description, sort
+        ) VALUES
+        <foreach collection="list" item="album" separator=",">
+            (#{album.name}, #{album.description}, #{album.sort})
+        </foreach>
+    </insert>
 
-<!--    AlbumStandardVO getStandardById(Long id);-->
-    <select id="getStandardById" resultType="cn.tedu.csmall.product.pojo.vo.AlbumStandardVO">
-        select  id, name, description, sort
+    <!--    List<AlbumListItemVO> list();-->
+    <select id="list" resultType="cn.tedu.csmall.product.pojo.vo.AlbumListItemVO">
+        select id, name, description, sort
         from pms_album
-        WHERE id=#{id}
+        order by sort desc, id desc
+    </select>
+
+    <!--    AlbumStandardVO getStandardById(Long id);-->
+    <select id="getStandardById" resultType="cn.tedu.csmall.product.pojo.vo.AlbumStandardVO">
+        select id, name, description, sort
+        from pms_album
+        WHERE id = #{id}
     </select>
 </mapper>

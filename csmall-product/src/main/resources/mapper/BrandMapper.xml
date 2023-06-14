@@ -4,6 +4,22 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.BrandMapper">
 
+    <!-- int insertBatch(List<Brand> brandList); -->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_brand (
+        name, pinyin, logo, description, keywords,
+        sort, sales, product_count, comment_count, positive_comment_count,
+        enable
+        ) VALUES
+        <foreach collection="list" item="brand" separator=",">
+            (
+            #{brand.name}, #{brand.pinyin}, #{brand.logo}, #{brand.description}, #{brand.keywords},
+            #{brand.sort}, #{brand.sales}, #{brand.productCount}, #{brand.commentCount}, #{brand.positiveCommentCount},
+            #{brand.enable}
+            )
+        </foreach>
+    </insert>
+
     <!-- BrandStandardVO getStandardById(Long id); -->
     <select id="getStandardById" resultMap="StandardResultMap">
         SELECT

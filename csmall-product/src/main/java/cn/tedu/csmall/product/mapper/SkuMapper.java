@@ -17,4 +17,12 @@ public interface SkuMapper extends BaseMapper<Sku> {
 
     List<SkuListItemVO> listBySpuId(Long spuId);
 
+    /**
+     * 批量插入SKU数据
+     *
+     * @param skuList 若干个SKU数据的集合
+     * @return 受影响的行数
+     */
+    int insertBatch(List<Sku> skuList);
+
 }

@@ -4,11 +4,75 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.BrandCategoryMapper">
 
-<!--    int countByBrand(Long brandId);-->
-    <select id="countByBrand" resultType="int">
+<!--    int countByCategoryId(Long brandId);-->
+    <select id="countByCategoryId" resultType="int">
+        select count(*)
+        from pms_brand_category
+        where category_id = #{categoryId}
+    </select>
+
+    <!--    int countByBrandId(Long brandId);-->
+    <select id="countByBrandId" resultType="int">
         select count(*)
         from pms_brand_category
         where brand_id = #{brandId}
     </select>
 
+    <!-- int insertBatch(List<BrandCategory> brandCategoryList); -->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_brand_category (
+        brand_id, category_id
+        ) VALUES
+        <foreach collection="list" item="brandCategory" separator=",">
+            (
+            #{brandCategory.brandId}, #{brandCategory.categoryId}
+            )
+        </foreach>
+    </insert>
+
+    <!-- BrandCategoryStandardVO getStandardById(Long id); -->
+    <select id="getStandardById" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+        pms_brand_category
+        WHERE
+        id=#{id}
+    </select>
+
+    <sql id="StandardQueryFields">
+        <if test="true">
+            brand_id, category_id
+        </if>
+    </sql>
+
+    <resultMap id="StandardResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.BrandStandardVO">
+        <id column="id" property="id"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="category_id" property="categoryId"/>
+    </resultMap>
+
+    <!-- List<BrandCategoryListItemVO> list(); -->
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        pms_brand_category
+        ORDER BY
+        id DESC
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            brand_id, category_id
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap"
+               type="cn.tedu.csmall.product.pojo.vo.BrandCategoryListItemVO">
+        <id column="id" property="id"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="category_id" property="categoryId"/>
+    </resultMap>
 </mapper>

@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -35,5 +37,20 @@ public class SkuMapperTests {
         for (Object item : list) {
             log.debug("列表项：{}", item);
         }
+    }
+
+    @Transactional // 添加此注解，可使得插入的数据不保存，以避免不修改测试数据时反复执行导致的主键冲突错误
+    @Test
+    void insertBatch() {
+        List<Sku> skuList = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            Sku sku = new Sku();
+            sku.setId(i + 0L);
+            sku.setTitle("批量插入测试数据" + i);
+            skuList.add(sku);
+        }
+
+        int rows = mapper.insertBatch(skuList);
+        log.debug("批量插入完成，受影响的行数：{}", rows);
     }
 }

@@ -9,14 +9,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @SpringBootTest
 public class AlbumMapperTests {
 
-    @Autowired(required = false)
+    @Autowired
     AlbumMapper mapper;
+
+    @Test
+    void insertBatch() {
+        List<Album> albums = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            Album album = new Album();
+            album.setName("批量插入测试数据" + i);
+            album.setDescription("批量插入测试数据的简介" + i);
+            album.setSort(200);
+            albums.add(album);
+        }
+
+        int rows = mapper.insertBatch(albums);
+        log.debug("批量插入完成，受影响的行数：{}", rows);
+    }
 
     @Test
     void insert() {

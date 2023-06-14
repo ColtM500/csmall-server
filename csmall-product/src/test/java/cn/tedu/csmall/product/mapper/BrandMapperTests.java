@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -40,6 +41,19 @@ public class BrandMapperTests {
         int rows = mapper.insert(brand);
         System.out.println("插入数据完成，受影响的行数：" + rows);
         System.out.println("插入数据之后，参数：" + brand);
+    }
+
+    @Test
+    void insertBatch() {
+        List<Brand> brands = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            Brand brand = new Brand();
+            brand.setName("批量插入测试数据" + i);
+            brands.add(brand);
+        }
+
+        int rows = mapper.insertBatch(brands);
+        log.debug("批量插入完成，受影响的行数：{}", rows);
     }
 
     @Test

@@ -17,4 +17,12 @@ public interface BrandMapper extends BaseMapper<Brand> {
     int countByNameAndNotId(@Param("id")Long id, @Param("name")String name);
 
     List<BrandListItemVO> list();
+
+    /**
+     * 批量插入品牌数据
+     *
+     * @param brandList 若干个品牌数据的集合
+     * @return 受影响的行数
+     */
+    int insertBatch(List<Brand> brandList);
 }

@@ -4,6 +4,14 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.AttributeTemplateMapper">
 
+    <!-- int insertBatch(List<AttributeTemplate> attributeTemplateList); -->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_attribute_template (name, pinyin, keywords, sort) VALUES
+        <foreach collection="list" item="attributeTemplate" separator=",">
+            (#{attributeTemplate.name}, #{attributeTemplate.pinyin}, #{attributeTemplate.keywords}, #{attributeTemplate.sort})
+        </foreach>
+    </insert>
+
     <!-- AttributeTemplateStandardVO getStandardById(Long id); -->
     <select id="getStandardById" resultMap="StandardResultMap">
         SELECT

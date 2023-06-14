@@ -11,7 +11,6 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
-import javax.management.monitor.StringMonitor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -125,6 +124,7 @@ public class RedisTests {
             System.out.println(serializable);
         }
     }
+
 
     @Autowired
     IAlbumCacheRepository repository;
