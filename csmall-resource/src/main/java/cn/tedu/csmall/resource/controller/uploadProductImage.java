@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/resources")
 @Api(tags = "文件上传模块")
 public class uploadProductImage {
 

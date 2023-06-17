@@ -4,7 +4,7 @@
 
 <mapper namespace="cn.tedu.csmall.product.mapper.AlbumMapper">
 
-    <cache/>
+<!--    <cache/>-->
 
     <!-- int insertBatch(List<Album> albumList); -->
     <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">

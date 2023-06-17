@@ -35,11 +35,11 @@ public class AlbumController {
     @Autowired
     private IAlbumService albumService;
 
-    // http://localhost:9180/album/add-new?name=TestName001&description=TestDescription001&sort=99
+        // http://localhost:9180/album/add-new?name=TestName001&description=TestDescription001&sort=99
     @PostMapping("/add-new")
     @ApiOperation("添加相册")
     @ApiOperationSupport(order = 100)
-    public JsonResult addNew(@Valid @RequestBody AlbumAddNewParam albumAddNewParam,
+    public JsonResult addNew(@Valid AlbumAddNewParam albumAddNewParam,
                              @ApiIgnore @AuthenticationPrincipal LoginPrincipal loginPrincipal) {
         log.debug("开始处理【添加相册】的请求，参数：{}", albumAddNewParam);
         log.debug("当事人:{}", loginPrincipal);
@@ -48,6 +48,16 @@ public class AlbumController {
 
         return JsonResult.ok();
     }
+// http://localhost:9080/albums/add-new
+//    @PostMapping("/add-new")
+//    @PreAuthorize("hasAuthority('/pms/album/add-new')")
+//    @ApiOperation("添加相册")
+//    @ApiOperationSupport(order = 100)
+//    public JsonResult<Void> addNew(@Valid AlbumAddNewParam albumAddNewParam) {
+//        log.debug("开始处理【添加相册】的请求，参数：{}", albumAddNewParam);
+//        albumService.addNew(albumAddNewParam);
+//        return JsonResult.ok();
+//    }
 
     // http://localhost:9180/album/delete
     @PostMapping("/{id:[0-9]+}/delete")
@@ -63,8 +73,8 @@ public class AlbumController {
         return JsonResult.ok();
     }
 
-    // http://localhost:9180/album/list
-    @GetMapping("/list")
+    // http://localhost:9180/albums
+    @GetMapping("")
     @PreAuthorize("hasAuthority('/pms/album/read')")
     @ApiOperation("查询相册列表")
     @ApiOperationSupport(order = 420)
@@ -85,7 +95,7 @@ public class AlbumController {
         return JsonResult.ok(pageData);
     }
 
-    // http://localhost:9180/album/getStandardById
+    // http://localhost:9180/album/id
     @GetMapping("/{id:[0-9]+}")
     @PreAuthorize("hasAuthority('/pms/album/read')")
     @ApiOperation("根据ID查询相册详情")
@@ -100,7 +110,7 @@ public class AlbumController {
         return JsonResult.ok(queryResult);
     }
 
-    // http://localhost:9180/album/updateInfoById
+    // http://localhost:9180/album/id/update
     @PostMapping("/{id:[0-9]+}/update")
     @PreAuthorize("hasAuthority('/pms/album/update')")
     @ApiOperation("修改相册详情")
